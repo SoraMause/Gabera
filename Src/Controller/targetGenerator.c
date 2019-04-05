@@ -61,8 +61,11 @@ void PIDControl( t_run *ideal, t_run *left, t_run *right, t_deviation *left_devi
   left_i = left_deviation->cumulative * ki;
   right_i = right_deviation->cumulative * ki;
 
-  left_d = ( left_error - left_deviation->difference ) / dt * kd;
-  right_d = ( right_error - right_deviation->difference ) / dt * kd;
+  //left_d = ( left_error - left_deviation->difference ) / dt * kd;
+  //right_d = ( right_error - right_deviation->difference ) / dt * kd;
+
+  left_d = ( left_error - left_deviation->difference ) * kd;
+  right_d = ( right_error - right_deviation->difference ) * kd;
 
   // 一つ前の値を計算( 微分用 )
   left_deviation->difference = left_error;
@@ -149,4 +152,47 @@ void frontWallControl( void )
   } else {
     frontwall_control_value = 0.0f;
   }
+}
+
+void feedForwardTranslation( float left_vel, float right_vel, float accel, float velocity, t_duty *duty, float vBat, uint8_t backright_flag )
+{
+  float center_vel = 0.0f; 
+  float motor_reverse_v = 0.0f;
+  float out_power = 0.0f;
+  float out_duty = 0.0f;
+  float real_accel = 0.0f;
+
+  // 中心速度を求め、mm/s から m/s に変換する
+  center_vel = (left_vel + right_vel) / 2000.0f;
+  
+  // モーターの逆起電力を計算する
+  // モーターの回転数 * 逆起電力定数
+  //motor_reverse_v = 30.0f * GEAR_RATION * center_vel / (3.141592f * MACHINE_WHEEL_RADIUS ) * MOTOR_REVERSE_VOLTAGE_CONSTANT; 
+  motor_reverse_v = 0.5648f * center_vel;
+
+  real_accel = accel / 1000.0f; // accel mm/ss から m/ssに変更
+  // 並進方向の計算
+  //out_power = MACHINE_WHEEL_RADIUS * MACHINE_WEIGHT * accel / ( 2.0f * GEAR_RATION); 0.00018375f
+  // out_powerに摩擦力を考慮した値を追加で足している 27.48979459f
+  // 0.5 m/sのとき0.0003, 1.0 m / s 0.00065 
+  if ( accel > 0.0f ){
+    out_power = (real_accel + 2.1f) * 0.00018375f;
+  } else if ( accel == 0.0f ){
+    //out_power = 0.00020f * ( velocity / 1000.0f);
+    out_power = 0.0f;
+  } else {
+    out_power = real_accel * 0.00018375f;
+  }
+  
+  // 出力すべき値の計算
+  //out_duty = ( MOTOR_RESISTOR * out_power / MOTOR_TORQUE_CONSTANT +  motor_reverse_v ) / Vbat;
+  if ( backright_flag == 0 ){
+    out_duty = ( 691.92f * out_power + motor_reverse_v ) / vBat;
+  } else {
+    out_duty = 0.0f;
+  }
+  
+  duty->left += (int32_t)(out_duty * 400);
+  duty->right += (int32_t)(out_duty * 400);
+  
 }

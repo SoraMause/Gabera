@@ -145,7 +145,6 @@ int main(void)
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
   machine_init();
-  //setIrledPwm( IRLED_ON );
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -155,7 +154,7 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    printf( "gyro z%f, batt_voltage : %f\r",rotation_real.velocity, batt_monitor );
+    printf( "gyro z%4.4f, batt_voltage : %2.2f, vel l : %4.4f, r : %4.4f\r",rotation_real.velocity, batt_monitor, left_real.velocity, right_real.velocity );
 
     if( mode_counter == 0 ){
       certainLedOut( LED_OFF );

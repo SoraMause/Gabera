@@ -75,6 +75,9 @@ void interrupt( void )
       integral( &rotation_ideal );  // 回転方向の計算
     }
 
+    feedForwardTranslation( left_real.velocity, right_real.velocity, translation_ideal.accel, translation_ideal.velocity, 
+                              &duty, batt_monitor, translation_trape_param.back_rightturn_flag);
+
     PIDControl( &translation_ideal, &left_real, &right_real, &run_left_deviation, &run_right_deviation,
             &translation_gain, &translation_trape_param, &duty, 0 );
 
@@ -106,8 +109,6 @@ void interrupt( void )
   setLog();
 
   buzzerOutPut();
-
-
 
 }
 

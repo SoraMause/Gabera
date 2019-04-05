@@ -192,9 +192,14 @@ void adachiFastRunDiagonal1400( t_normal_param *translation, t_normal_param *rot
   
   setControlFlag( 0 );
   setLogFlag( 0 );
-  waitMotion( 1000 );
+  waitMotion( 500 );
   funControl( FUN_ON );
+  fullColorLedOut( 0x04 );
   waitMotion( 1000 );
+  fullColorLedOut( 0x02 );
+  waitMotion( 750 );
+  fullColorLedOut( 0x01 );
+  waitMotion( 500 );
   setLogFlag( 1 );
   setControlFlag( 1 );
   
@@ -447,11 +452,11 @@ void adachiFastRunDiagonal1400( t_normal_param *translation, t_normal_param *rot
       case FRONTPD_DELAY:
         // 前壁制御有効にする
         frontwall_control_flag = 1;
-        waitMotion( 100 );
+        waitMotion( 500 );
         break;
 
       case DELAY:
-        waitMotion( 50 );
+        waitMotion( 300 );
         break;
 
       case SET_FRONT_PD_STRAIGHT:
@@ -479,9 +484,14 @@ void adachiFastRunDiagonal1600( t_normal_param *translation, t_normal_param *rot
   
   setControlFlag( 0 );
   setLogFlag( 0 );
-  waitMotion( 1000 );
+  waitMotion( 500 );
   funControl( FUN_ON );
+  fullColorLedOut( 0x04 );
   waitMotion( 1000 );
+  fullColorLedOut( 0x02 );
+  waitMotion( 750 );
+  fullColorLedOut( 0x01 );
+  waitMotion( 500 );
   setLogFlag( 1 );
   setControlFlag( 1 );
   
@@ -582,11 +592,11 @@ void adachiFastRunDiagonal1600( t_normal_param *translation, t_normal_param *rot
       case FRONTPD_DELAY:
         // 前壁制御有効にする
         frontwall_control_flag = 1;
-        waitMotion( 100 );
+        waitMotion( 500 );
         break;
 
       case DELAY:
-        waitMotion( 50 );
+        waitMotion( 300 );
         break;
 
       case SET_FRONT_PD_STRAIGHT:
@@ -615,9 +625,14 @@ void adachiFastRunDiagonal1700( t_normal_param *translation, t_normal_param *rot
   
   setControlFlag( 0 );
   setLogFlag( 0 );
-  waitMotion( 1000 );
+  waitMotion( 500 );
   funControl( FUN_ON );
+  fullColorLedOut( 0x04 );
   waitMotion( 1000 );
+  fullColorLedOut( 0x02 );
+  waitMotion( 750 );
+  fullColorLedOut( 0x01 );
+  waitMotion( 500 );
   setLogFlag( 1 );
   setControlFlag( 1 );
   
@@ -895,11 +910,11 @@ void adachiFastRunDiagonal1700( t_normal_param *translation, t_normal_param *rot
       case FRONTPD_DELAY:
         // 前壁制御有効にする
         frontwall_control_flag = 1;
-        waitMotion( 100 );
+        waitMotion( 500 );
         break;
 
       case DELAY:
-        waitMotion( 50 );
+        waitMotion( 300 );
         break;
 
       case SET_FRONT_PD_STRAIGHT:

@@ -24,6 +24,6 @@
 #define MOTOR_CONTROL_PERIOD 400
 
 // タイヤが一回転するまでのエンコーダの値
-#define MACHINE_ENC_CNT_PER_ROT 7168 // 512 * 4 * 3.5 
+#define MACHINE_ENC_CNT_PER_ROT 57344 // 4096 * 4 * 3.5 
 
 #endif /* __CONFIG_H */

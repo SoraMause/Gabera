@@ -12,5 +12,6 @@ void PIDControl( t_run *ideal, t_run *left, t_run *right, t_deviation *left_devi
 void sideWallControl( void );
 void frontWallControl( void );
 
+void feedForwardTranslation( float left_vel, float right_vel, float accel, float velocity, t_duty *duty, float vBat, uint8_t backright_flag );
 
 #endif /* __TARGET_GENERATOR_H */

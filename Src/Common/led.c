@@ -11,7 +11,7 @@
 ///////////////////////////////////////////////////////////////////////
 uint8_t getPushsw( void )
 {
-  if ( HAL_GPIO_ReadPin( pushsw_GPIO_Port ,pushsw_Pin ) == 0 ){
+  if ( HAL_GPIO_ReadPin( pushsw_GPIO_Port ,pushsw_Pin ) == 1 ){
     return 1;
   } else {
     return 0;

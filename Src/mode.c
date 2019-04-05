@@ -100,7 +100,7 @@ void mode_init( void )
   setSlaromOffset( &slarom500, 18.5f, 19.5f, 18.5f, 19.5f, 7200.0f, 600.0f );
 
   setPIDGain( &translation_gain, 1.5f, 35.0f, 0.0f );  
-  setPIDGain( &rotation_gain, 0.47f, 45.0f, 0.0f ); 
+  setPIDGain( &rotation_gain, 0.39f, 15.0f, 0.85f ); 
   setPIDGain( &sensor_gain, 0.2f, 0.0f, 0.0f );
 
   setSenDiffValue( 7 );
@@ -307,9 +307,7 @@ void mode2( void )
   certainLedOut( 0x00 );
   waitMotion( 2000 );
   fullColorLedOut( 0x00 );
-  while( getPushsw() == 0 ){
-    printf( "log_wait\r");
-  }
+  while( getPushsw() == 0 );
   showLog();  
 
 }
@@ -386,6 +384,7 @@ void mode6( void )
   waitRotation();
   setLogFlag( 0 );
   setControlFlag( 0 );
+  adcEnd();
   while( getPushsw() == 0 );
   showLog();
 }
@@ -413,10 +412,10 @@ void mode8( void )
   buzzerSetMonophonic( NORMAL, 200 );
   HAL_Delay(300); 
   startAction();
-  setControlFlag( 0 );
-  funControl( FUN_ON );
-  waitMotion( 1000 );
-  setControlFlag( 0 );
+  //setControlFlag( 0 );
+  //funControl( FUN_ON );
+  //waitMotion( 1000 );
+  setControlFlag( 1 );
   translation_ideal.velocity = 0.0f;
   rotation_ideal.velocity = 0.0f;
   while( 1 );

@@ -498,12 +498,12 @@ void funControl( uint8_t fun_mode )
 void buzzerPwmOut( uint32_t pwm, uint32_t period ) 
 {
   if ( buzzer_period_buff != period ){
-    htim2.Instance = TIM3;
-    htim2.Init.Prescaler = period;
-    htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-    htim2.Init.Period = 99;
-    htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-    if (HAL_TIM_PWM_Init(&htim2) != HAL_OK)
+    htim3.Instance = TIM3;
+    htim3.Init.Prescaler = period;
+    htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
+    htim3.Init.Period = 99;
+    htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+    if (HAL_TIM_PWM_Init(&htim3) != HAL_OK)
     {
       Error_Handler();
     }
@@ -539,21 +539,21 @@ void update_encoder( t_enc_value *enc, t_run *left, t_run *right )
 {
   float enc_left_omega, enc_right_omega;
 
-  uint16_t enc_l_buff = TIM1->CNT;
-  uint16_t enc_r_buff = TIM8->CNT;
+  uint16_t enc_l_buff = TIM8->CNT;
+  uint16_t enc_r_buff = TIM1->CNT;
   TIM1->CNT = 0;
   TIM8->CNT = 0;
 
   if( enc_l_buff > 32767 ){
-    enc->left = (int16_t)enc_l_buff;
+    enc->left = -1 * (int16_t)enc_l_buff;
   } else {
-    enc->left = enc_l_buff;
+    enc->left = -1 * enc_l_buff;
   }
   
   if ( enc_r_buff > 32767 ){
-    enc->right = -1 * (int16_t)enc_r_buff;
+    enc->right = (int16_t)enc_r_buff;
   } else {
-    enc->right = -1 * enc_r_buff;
+    enc->right = enc_r_buff;
   }
 
   enc_left_omega = (float)enc->left * 2.0f / MACHINE_ENC_CNT_PER_ROT  * PI / dt ;
