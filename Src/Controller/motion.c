@@ -30,7 +30,7 @@ void adjFront( float accel, float run_vel )
 
 void adjBack( void )
 {
-  setStraight( -55.0f, 2000, 150.0f, 0.0f, 0.0f );
+  setStraight( -50.0f, 1000.0f, 150.0f, 0.0f, 0.0f );
   waitStraight();
 }
 

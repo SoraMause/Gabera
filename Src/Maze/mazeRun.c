@@ -195,9 +195,9 @@ void adachiFastRunDiagonal1400( t_normal_param *translation, t_normal_param *rot
   waitMotion( 500 );
   funControl( FUN_ON );
   fullColorLedOut( 0x04 );
-  waitMotion( 1000 );
+  waitMotion( 500 );
   fullColorLedOut( 0x02 );
-  waitMotion( 750 );
+  waitMotion( 500 );
   fullColorLedOut( 0x01 );
   waitMotion( 500 );
   setLogFlag( 1 );
@@ -224,10 +224,6 @@ void adachiFastRunDiagonal1400( t_normal_param *translation, t_normal_param *rot
       case CENRTER_SLAROM_LEFT:
         fullColorLedOut( 0x02 );
         sidewall_control_flag = 1;
-        while( sen_l.now > sen_l.threshold );
-        if ( translation_ideal.distance < 15.0f ){
-          translation_ideal.distance = 8.4f;
-        }
         setStraight( 20.0f, translation->accel, 1400.0f, 1400.0f, 1400.0f );
         waitStraight();
         setRotation( 90.0f, 12000.0f, 720.0f, 1400.0f );
@@ -240,10 +236,6 @@ void adachiFastRunDiagonal1400( t_normal_param *translation, t_normal_param *rot
       case CENRTER_SLAROM_RIGHT:
         fullColorLedOut( 0x02 );
         sidewall_control_flag = 1;
-        while( sen_r.now > sen_r.threshold );
-        if ( translation_ideal.distance < 15.0f ){
-          translation_ideal.distance = 9.8f;
-        }
         setStraight( 20.0f, translation->accel, 1400.0f, 1400.0f, 1400.0f );
         waitStraight();
         setRotation( -90.0f, 12000.0f, 720.0f, 1400.0f );
@@ -257,10 +249,6 @@ void adachiFastRunDiagonal1400( t_normal_param *translation, t_normal_param *rot
       case SLAROM_LEFT_180:
         fullColorLedOut( 0x03 );
         sidewall_control_flag = 1;
-        while( sen_l.now > sen_l.threshold );
-        if ( translation_ideal.distance < 15.0f ){
-          translation_ideal.distance = 8.4f;
-        }
         setStraight( 30.0f, translation->accel, 1400.0f, 1400.0f, 1400.0f );
         waitStraight();
         setRotation( 180.0f, 12000.0f, 960.0f, 1400.0f );
@@ -273,10 +261,6 @@ void adachiFastRunDiagonal1400( t_normal_param *translation, t_normal_param *rot
       case SLAROM_RIGHT_180:
         fullColorLedOut( 0x03 );
         sidewall_control_flag = 1;
-        while( sen_r.now > sen_r.threshold );
-        if ( translation_ideal.distance < 15.0f ){
-          translation_ideal.distance = 9.8f;
-        }
         setStraight( 30.0f, translation->accel, 1400.0f, 1400.0f, 1400.0f );
         waitStraight();
         setRotation( -180.0f, 12000.0f, 960.0f, 1400.0f );
@@ -290,7 +274,6 @@ void adachiFastRunDiagonal1400( t_normal_param *translation, t_normal_param *rot
       case DIA_CENTER_LEFT:
         fullColorLedOut( 0x04 );
         sidewall_control_flag = 1;
-        while( sen_l.now > sen_l.threshold );
         setStraight( 17.0f, translation->accel, 1400.0f, 1400.0f, 1400.0f );
         waitStraight();
         setRotation( 45.0f, 20000.0f, 900.0f, 1400.0f );
@@ -303,7 +286,6 @@ void adachiFastRunDiagonal1400( t_normal_param *translation, t_normal_param *rot
       case DIA_CENTER_RIGHT:
         fullColorLedOut( 0x04 );
         sidewall_control_flag = 1;
-        while( sen_r.now > sen_r.threshold );
         setStraight( 17.0f, translation->accel, 1400.0f, 1400.0f, 1400.0f );
         waitStraight();
         setRotation( -45.0f, 20000.0f, 900.0f, 1400.0f );
@@ -317,7 +299,6 @@ void adachiFastRunDiagonal1400( t_normal_param *translation, t_normal_param *rot
       case DIA_CENTER_LEFT_135:
         fullColorLedOut( 0x05 );
         sidewall_control_flag = 1;
-        while( sen_l.now > sen_l.threshold );
         setStraight( 40.0f, translation->accel, 1400.0f, 1400.0f, 1400.0f );
         waitStraight();
         setRotation( 135.0f, 25000.0f, 1000.0f, 1400.0f );
@@ -330,7 +311,6 @@ void adachiFastRunDiagonal1400( t_normal_param *translation, t_normal_param *rot
       case DIA_CENTER_RIGHT_135:
         fullColorLedOut( 0x05 );
         sidewall_control_flag = 1;
-        while( sen_r.now > sen_r.threshold );
         setStraight( 40.0f, translation->accel, 1400.0f, 1400.0f, 1400.0f );
         waitStraight();
         setRotation( -135.0f, 25000.0f, 1000.0f, 1400.0f );
@@ -344,10 +324,6 @@ void adachiFastRunDiagonal1400( t_normal_param *translation, t_normal_param *rot
       case DIA_LEFT_TURN:
         fullColorLedOut( 0x06 );
         dirwall_control_flag = 1;
-        while( sen_l.now > sen_l.threshold && translation_ideal.distance < 15.0f );
-        if ( translation_ideal.distance < 15.0f ){
-          translation_ideal.distance = 9.8f;
-        }
 
         setStraight( 26.0f, 0.0f, 1400.0f, 1400.0f, 1400.0f );
         waitStraight();
@@ -361,10 +337,6 @@ void adachiFastRunDiagonal1400( t_normal_param *translation, t_normal_param *rot
       case DIA_RIGHT_TURN:
         fullColorLedOut( 0x06 );
         dirwall_control_flag = 1;
-        while( sen_r.now > sen_r.threshold && translation_ideal.distance < 15.0f );
-        if ( translation_ideal.distance < 15.0f ){
-          translation_ideal.distance = 8.4f;
-        }
 
         setStraight( 26.0f, 0.0f, 1400.0f, 1400.0f, 1400.0f );
         waitStraight();
@@ -379,11 +351,6 @@ void adachiFastRunDiagonal1400( t_normal_param *translation, t_normal_param *rot
       case RETURN_DIA_LEFT:
         fullColorLedOut( 0x07 );
         dirwall_control_flag = 1;
-
-        while( sen_l.now > sen_l.threshold && translation_ideal.distance < 15.0f );
-        if ( translation_ideal.distance < 15.0f ){
-          translation_ideal.distance = 9.8f;
-        }
         
         setStraight( 55.0f, 0.0f, 1400.0f, 1400.0f, 1400.0f );
         waitStraight();
@@ -396,12 +363,7 @@ void adachiFastRunDiagonal1400( t_normal_param *translation, t_normal_param *rot
 
       case RETURN_DIA_RIGHT:
         fullColorLedOut( 0x07 );
-        dirwall_control_flag = 1;
-        
-        while( sen_r.now > sen_r.threshold && translation_ideal.distance < 15.0f );
-        if ( translation_ideal.distance < 15.0f ){
-          translation_ideal.distance = 8.4f;
-        }
+        dirwall_control_flag = 1;     
 
         setStraight( 55.0f, 0.0f, 1400.0f, 1400.0f, 1400.0f );
         waitStraight();
@@ -416,11 +378,6 @@ void adachiFastRunDiagonal1400( t_normal_param *translation, t_normal_param *rot
       case RETURN_DIA_LEFT_135:
         fullColorLedOut( 0x07 );
         dirwall_control_flag = 1;
-        
-        while( sen_l.now > sen_l.threshold && translation_ideal.distance < 15.0f );
-        if ( translation_ideal.distance < 15.0f ){
-          translation_ideal.distance = 9.8f;
-        }
 
         setStraight( 47.0f, 0.0f, 1400.0f, 1400.0f, 1400.0f );
         waitStraight();
@@ -434,11 +391,6 @@ void adachiFastRunDiagonal1400( t_normal_param *translation, t_normal_param *rot
       case RETURN_DIA_RIGHT_135:
         fullColorLedOut( 0x07 );
         dirwall_control_flag = 1;
-
-        while( sen_r.now > sen_r.threshold && translation_ideal.distance < 15.0f );
-        if ( translation_ideal.distance < 15.0f ){
-          translation_ideal.distance = 8.4f;
-        }
 
         setStraight( 47.0f, 0.0f, 1400.0f, 1400.0f, 1400.0f );
         waitStraight();
@@ -487,9 +439,9 @@ void adachiFastRunDiagonal1600( t_normal_param *translation, t_normal_param *rot
   waitMotion( 500 );
   funControl( FUN_ON );
   fullColorLedOut( 0x04 );
-  waitMotion( 1000 );
+  waitMotion( 500 );
   fullColorLedOut( 0x02 );
-  waitMotion( 750 );
+  waitMotion( 500 );
   fullColorLedOut( 0x01 );
   waitMotion( 500 );
   setLogFlag( 1 );
@@ -628,9 +580,9 @@ void adachiFastRunDiagonal1700( t_normal_param *translation, t_normal_param *rot
   waitMotion( 500 );
   funControl( FUN_ON );
   fullColorLedOut( 0x04 );
-  waitMotion( 1000 );
+  waitMotion( 500 );
   fullColorLedOut( 0x02 );
-  waitMotion( 750 );
+  waitMotion( 500 );
   fullColorLedOut( 0x01 );
   waitMotion( 500 );
   setLogFlag( 1 );
@@ -662,10 +614,6 @@ void adachiFastRunDiagonal1700( t_normal_param *translation, t_normal_param *rot
       case CENRTER_SLAROM_LEFT:
         fullColorLedOut( 0x02 );
         sidewall_control_flag = 1;
-        while( sen_l.now > sen_l.threshold && translation_ideal.distance < 15.0f );
-        if ( translation_ideal.distance < 15.0 ) {
-          translation_ideal.distance = 6.8f;
-        }
         setStraight( 27.0f, translation->accel, 1700.0f, 1700.0f, 1700.0f );
         waitStraight();
         setRotation( 90.5f, 20000.0f, 900.0f, 1700.0f );
@@ -678,10 +626,6 @@ void adachiFastRunDiagonal1700( t_normal_param *translation, t_normal_param *rot
       case CENRTER_SLAROM_RIGHT:
         fullColorLedOut( 0x02 );
         sidewall_control_flag = 1;
-        while( sen_r.now > sen_r.threshold && translation_ideal.distance < 15.0f );
-        if ( translation_ideal.distance < 15.0 ) {
-          translation_ideal.distance = 6.8f;
-        }
         setStraight( 27.0f, translation->accel, 1700.0f, 1700.0f, 1700.0f );
         waitStraight();
         setRotation( -90.0f, 20000.0f, 900.0f, 1700.0f );
@@ -695,10 +639,6 @@ void adachiFastRunDiagonal1700( t_normal_param *translation, t_normal_param *rot
       case SLAROM_LEFT_180:
         fullColorLedOut( 0x03 );
         sidewall_control_flag = 1;
-        while( sen_l.now > sen_l.threshold && translation_ideal.distance < 15.0f );
-        if ( translation_ideal.distance < 15.0 ) {
-          translation_ideal.distance = 6.8f;
-        }
         setStraight( 35.0f, translation->accel, 1700.0f, 1700.0f, 1700.0f );
         waitStraight();
         setRotation( 180.0f, 26000.0f, 1100.0f, 1700.0f );
@@ -711,10 +651,6 @@ void adachiFastRunDiagonal1700( t_normal_param *translation, t_normal_param *rot
       case SLAROM_RIGHT_180:
         fullColorLedOut( 0x03 );
         sidewall_control_flag = 1;
-        while( sen_r.now > sen_r.threshold && translation_ideal.distance < 15.0f );
-        if ( translation_ideal.distance < 15.0 ) {
-          translation_ideal.distance = 6.8f;
-        }
         setStraight( 35.0f, translation->accel, 1700.0f, 1700.0f, 1700.0f );
         waitStraight();
         setRotation( -180.0f, 26000.0f, 1100.0f, 1700.0f );
@@ -728,10 +664,6 @@ void adachiFastRunDiagonal1700( t_normal_param *translation, t_normal_param *rot
       case DIA_CENTER_LEFT:
         fullColorLedOut( 0x04 );
         sidewall_control_flag = 1;
-        while( sen_l.now > sen_l.threshold && translation_ideal.distance < 10.0f );
-        if ( translation_ideal.distance < 10.0 ) {
-          translation_ideal.distance = 6.8f;
-        }
         setStraight( 11.0f, translation->accel, 1700.0f, 1700.0f, 1700.0f );
         waitStraight();
         setRotation( 45.0f, 25000.0f, 1000.0f, 1700.0f );
@@ -748,10 +680,6 @@ void adachiFastRunDiagonal1700( t_normal_param *translation, t_normal_param *rot
       case DIA_CENTER_RIGHT:
         fullColorLedOut( 0x04 );
         sidewall_control_flag = 1;
-        while( sen_r.now > sen_r.threshold && translation_ideal.distance < 10.0f );
-        if ( translation_ideal.distance < 10.0 ) {
-          translation_ideal.distance = 6.8f;
-        }
         setStraight( 11.0f, translation->accel, 1700.0f, 1700.0f, 1700.0f );
         waitStraight();
         setRotation( -45.0f, 25000.0f, 1000.0f, 1700.0f );
@@ -769,10 +697,6 @@ void adachiFastRunDiagonal1700( t_normal_param *translation, t_normal_param *rot
       case DIA_CENTER_LEFT_135:
         fullColorLedOut( 0x05 );
         sidewall_control_flag = 1;
-        while( sen_l.now > sen_l.threshold && translation_ideal.distance < 25.0f );
-        if ( translation_ideal.distance < 15.0 ) {
-          translation_ideal.distance = 6.8f;
-        }
         setStraight( 27.0f, translation->accel, 1700.0f, 1700.0f, 1700.0f );
         waitStraight();
         setRotation( 136.0f, 30000.0f, 1200.0f, 1700.0f );
@@ -789,10 +713,6 @@ void adachiFastRunDiagonal1700( t_normal_param *translation, t_normal_param *rot
       case DIA_CENTER_RIGHT_135:
         fullColorLedOut( 0x05 );
         sidewall_control_flag = 1;
-        while( sen_r.now > sen_r.threshold && translation_ideal.distance < 25.0f );
-        if ( translation_ideal.distance < 15.0 ) {
-          translation_ideal.distance = 6.8f;
-        }
         setStraight( 27.0f, translation->accel, 1700.0f, 1700.0f, 1700.0f );
         waitStraight();
         setRotation( -135.0f, 30000.0f, 1200.0f, 1700.0f );
@@ -810,10 +730,6 @@ void adachiFastRunDiagonal1700( t_normal_param *translation, t_normal_param *rot
       case DIA_LEFT_TURN:
         fullColorLedOut( 0x06 );
         dirwall_control_flag = 1;
-        while( sen_l.now > sen_l.threshold && translation_ideal.distance < 15.0f );
-        if ( translation_ideal.distance < 10.0f ){
-          translation_ideal.distance = 8.0f;
-        }
         setStraight( 11.0f, 0.0f, 1600.0f, 1600.0f, 1600.0f );
         waitStraight();
         setRotation( 90.0f, 30000.0f, 1200.0f, 1600.0f );
@@ -830,10 +746,6 @@ void adachiFastRunDiagonal1700( t_normal_param *translation, t_normal_param *rot
       case DIA_RIGHT_TURN:
         fullColorLedOut( 0x06 );
         dirwall_control_flag = 1;
-        while( sen_r.now > sen_r.threshold && translation_ideal.distance < 15.0f );
-        if ( translation_ideal.distance < 10.0f ){
-          translation_ideal.distance = 8.0f;
-        }
         setStraight( 11.0f, 0.0f, 1600.0f, 1600.0f, 1600.0f );
         waitStraight();
         setRotation( -90.0f, 30000.0f, 1200.0f, 1600.0f );
@@ -851,10 +763,6 @@ void adachiFastRunDiagonal1700( t_normal_param *translation, t_normal_param *rot
       case RETURN_DIA_LEFT:
         fullColorLedOut( 0x07 );
         dirwall_control_flag = 1;
-        while( sen_l.now > sen_l.threshold && translation_ideal.distance < 15.0f );
-        if ( translation_ideal.distance < 15.0 ) {
-          translation_ideal.distance = 8.5f;
-        }
         setStraight( 45.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f );
         waitStraight();
         setRotation( 47.0f, 25000.0f, 1000.0f, 1700.0f );
@@ -867,10 +775,6 @@ void adachiFastRunDiagonal1700( t_normal_param *translation, t_normal_param *rot
       case RETURN_DIA_RIGHT:
         fullColorLedOut( 0x07 );
         dirwall_control_flag = 1;
-        while( sen_r.now > sen_r.threshold && translation_ideal.distance < 15.0f );
-        if ( translation_ideal.distance < 15.0 ) {
-          translation_ideal.distance = 8.5f;
-        }
         setStraight( 45.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f );
         waitStraight();
         setRotation( -45.0f, 25000.0f, 1000.0f, 1700.0f );
@@ -884,7 +788,6 @@ void adachiFastRunDiagonal1700( t_normal_param *translation, t_normal_param *rot
       case RETURN_DIA_LEFT_135:
         fullColorLedOut( 0x07 );
         dirwall_control_flag = 1;
-        while( sen_l.now > sen_l.threshold && translation_ideal.distance < 12.0f );
         setStraight( 15.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f );
         waitStraight();
         setRotation( 136.0f, 30000.0f, 1200.0f, 1700.0f );
@@ -897,7 +800,6 @@ void adachiFastRunDiagonal1700( t_normal_param *translation, t_normal_param *rot
       case RETURN_DIA_RIGHT_135:
         fullColorLedOut( 0x07 );
         dirwall_control_flag = 1;
-        while( sen_r.now > sen_r.threshold && translation_ideal.distance < 12.0f );
         setStraight( 15.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f );
         waitStraight();
         setRotation( -135.0f, 30000.0f, 1200.0f, 1700.0f );

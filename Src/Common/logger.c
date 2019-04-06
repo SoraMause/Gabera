@@ -6,6 +6,8 @@
 
 #include "run.h"
 
+#include "led.h"
+
 t_log_data logger;
 
 static int8_t log_flag = 0;
@@ -56,8 +58,12 @@ void showLog( void )
   for ( int i  = 0; i < log_count; i++ ){
     printf( "%d,%d,%d,%d,%f\r\n",logger.sensor_left[i], logger.sensor_right[i],
             logger.trans_ideal_vel[i], logger.trans_vel[i], logger.trans_dis[i] );
+
+    certainLedOut( ( i & 0x04 ) );
   }
-  waitMotion( 1000 );
+
+  certainLedOut( 0x00 );
+  waitMotion( 2000 );
   
 }
 

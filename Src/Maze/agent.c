@@ -735,7 +735,7 @@ void setFastPathParameter1400( int8_t motion_buff[256], int8_t motion_data[256],
   fast_path[0].start_speed = 0.0f;
   fast_path[0].end_speed = 1100.0f;
   fast_path[0].speed = 1100.0f;
-  fast_path[0].distance = 40.0f;
+  fast_path[0].distance = 47.0f;
   for( int i = 1; i < *cnt_motion; i++ ){
     if ( i == *cnt_motion -2 ){
       fast_path[i].start_speed = 1400.0f;
@@ -839,7 +839,7 @@ void setFastPathParameter1600( int8_t motion_buff[256], int8_t motion_data[256],
   fast_path[0].start_speed = 0.0f;
   fast_path[0].end_speed = 1200.0f;
   fast_path[0].speed = 1200.0f;
-  fast_path[0].distance = 40.0f;
+  fast_path[0].distance = 47.0f;
   for( int i = 1; i < *cnt_motion; i++ ){
     if ( i == *cnt_motion -2 ){
       fast_path[i].start_speed = 1600.0f;
@@ -945,7 +945,7 @@ void setFastPathParameter1700( int8_t motion_buff[256], int8_t motion_data[256],
   fast_path[0].start_speed = 0.0f;
   fast_path[0].end_speed = 1300.0f;
   fast_path[0].speed = 1300.0f;
-  fast_path[0].distance = 40.0f;
+  fast_path[0].distance = 47.0f;
   for( int i = 1; i < *cnt_motion; i++ ){
     if ( i == *cnt_motion -2 ){
       fast_path[i].start_speed = 1700.0f;

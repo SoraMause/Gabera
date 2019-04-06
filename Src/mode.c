@@ -100,16 +100,15 @@ void mode_init( void )
   setSlaromOffset( &slarom500, 18.5f, 19.5f, 18.5f, 19.5f, 7200.0f, 600.0f );
 
   setPIDGain( &translation_gain, 1.5f, 35.0f, 0.0f );  
-  setPIDGain( &rotation_gain, 0.39f, 15.0f, 0.85f ); 
+  setPIDGain( &rotation_gain, 0.39f, 14.0f, 0.85f ); 
   setPIDGain( &sensor_gain, 0.2f, 0.0f, 0.0f );
 
   setSenDiffValue( 7 );
 
   // sensor 値設定
-  setSensorConstant( &sen_front, 650, 140 );
-  // 区画中心　前壁 195
-  setSensorConstant( &sen_l, 390, 155 );
-  setSensorConstant( &sen_r, 275, 135 );
+  setSensorConstant( &sen_front, 800, 150 );
+  setSensorConstant( &sen_l, 470, 270 );
+  setSensorConstant( &sen_r, 400, 230 );
 
   certainLedOut( LED_LEFT );
   waitMotion( 100 );
@@ -130,7 +129,7 @@ void startAction( void )
   HAL_Delay( 300 );
   fullColorLedOut( LED_MAGENTA );
   adcStart();
-  while( sen_front.now < 600 );
+  while( sen_front.now < 550 );
   fullColorLedOut( LED_YELLOW );
   buzzerSetMonophonic( C_H_SCALE, 300 );
   adcEnd();
@@ -240,49 +239,40 @@ void mode2( void )
   waitMotion( 100 );
   certainLedOut( LED_OFF );
 
+  setPIDGain( &translation_gain, 2.6f, 45.0f, 0.0f );  
+  setPIDGain( &rotation_gain, 0.55f, 60.0f, 0.25f ); 
+
   if ( speed_count == 0 ){
     speed_count = PARAM_1400;
     setNormalRunParam( &run_param, 18000.0f, 1000.0f );       // 加速度、速度指定
     setNormalRunParam( &rotation_param, 6300.0f, 450.0f );  // 角加速度、角速度指定  
-    setPIDGain( &translation_gain, 2.6f, 45.0f, 0.0f );  
-    setPIDGain( &rotation_gain, 0.50f, 50.0f, 0.0f );
     setSenDiffValue( 35 ); 
   } else if ( speed_count == 1 ){
     speed_count = PARAM_1400;
     setNormalRunParam( &run_param, 18000.0f, 1000.0f );       // 加速度、速度指定
     setNormalRunParam( &rotation_param, 6300.0f, 450.0f );  // 角加速度、角速度指定  
-    setPIDGain( &translation_gain, 2.6f, 45.0f, 0.0f );  
-    setPIDGain( &rotation_gain, 0.50f, 50.0f, 0.0f );
     setSenDiffValue( 35 ); 
     _straight = 1;
   } else if ( speed_count == 2 ){
     speed_count = PARAM_1600;
     setNormalRunParam( &run_param, 20000.0f, 1000.0f );       // 加速度、速度指定
     setNormalRunParam( &rotation_param, 6300.0f, 450.0f );  // 角加速度、角速度指定  
-    setPIDGain( &translation_gain, 2.6f, 45.0f, 0.0f );  
-    setPIDGain( &rotation_gain, 0.50f, 60.0f, 0.0f );
     setSenDiffValue( 45 ); 
   } else if ( speed_count == 3 ){
     speed_count = PARAM_1600;
     setNormalRunParam( &run_param, 20000.0f, 1000.0f );       // 加速度、速度指定
     setNormalRunParam( &rotation_param, 6300.0f, 450.0f );  // 角加速度、角速度指定  
-    setPIDGain( &translation_gain, 2.6f, 45.0f, 0.0f );  
-    setPIDGain( &rotation_gain, 0.50f, 60.0f, 0.0f );
     setSenDiffValue( 45 ); 
     _straight = 1;
   } else if ( speed_count == 4 ){
     speed_count = PARAM_1700;
     setNormalRunParam( &run_param, 22000.0f, 1000.0f );       // 加速度、速度指定
     setNormalRunParam( &rotation_param, 6300.0f, 450.0f );  // 角加速度、角速度指定  
-    setPIDGain( &translation_gain, 2.6f, 45.0f, 0.0f );  
-    setPIDGain( &rotation_gain, 0.50f, 60.0f, 0.0f );
     setSenDiffValue( 150 ); 
   } else if ( speed_count == 5 ){
     speed_count = PARAM_1700;
     setNormalRunParam( &run_param, 22000.0f, 1000.0f );       // 加速度、速度指定
     setNormalRunParam( &rotation_param, 6300.0f, 450.0f );  // 角加速度、角速度指定  
-    setPIDGain( &translation_gain, 2.6f, 45.0f, 0.0f );  
-    setPIDGain( &rotation_gain, 0.50f, 60.0f, 0.0f );
     setSenDiffValue( 150 ); 
     _straight = 1;
   } 
@@ -305,6 +295,7 @@ void mode2( void )
   // debug 
   fullColorLedOut( 0x0f );
   certainLedOut( 0x00 );
+  adcEnd();
   waitMotion( 2000 );
   fullColorLedOut( 0x00 );
   while( getPushsw() == 0 );
@@ -369,7 +360,45 @@ void mode4( void )
 // 重ね探索
 void mode5( void )
 {
+  setPIDGain( &translation_gain, 2.6f, 45.0f, 0.0f );  
+  setPIDGain( &rotation_gain, 0.55f, 60.0f, 0.25f ); 
+  startAction();
 
+  setControlFlag( 0 );
+  setLogFlag( 0 );
+  waitMotion( 500 );
+  funControl( FUN_ON );
+  fullColorLedOut( 0x04 );
+  waitMotion( 500 );
+  fullColorLedOut( 0x02 );
+  waitMotion( 500 );
+  fullColorLedOut( 0x01 );
+  waitMotion( 500 );
+  setLogFlag( 1 );
+  setControlFlag( 1 );
+
+  sidewall_control_flag = 1;
+  setStraight( 227.0f, 18000.0f, 1400.0f, 0.0f, 1400.0f );
+  waitStraight();
+  setStraight( 20.0f, 0.0f, 1400.0f, 1400.0f, 1400.0f );
+  waitStraight();
+  setRotation(90.0f, 12000.0f, 720.0f, 1400.0f);
+  waitRotation();
+  setStraight( 26.0f, 0.0f, 1400.0f, 1400.0f, 1400.0f);
+  waitStraight();
+  setStraight( 180.0f, 18000.0f, 1400.0f, 1400.0f, 0.0f );
+  waitStraight();
+  
+  waitMotion( 100 );
+
+  setControlFlag( 0 );
+  adcEnd();
+  funControl( FUN_OFF );
+  setLogFlag( 0 );
+  waitMotion( 1000 );
+  fullColorLedOut( 0x00 );
+  while( getPushsw() == 0 );
+  showLog(); 
 
 }
 
@@ -412,10 +441,10 @@ void mode8( void )
   buzzerSetMonophonic( NORMAL, 200 );
   HAL_Delay(300); 
   startAction();
-  //setControlFlag( 0 );
-  //funControl( FUN_ON );
-  //waitMotion( 1000 );
-  setControlFlag( 1 );
+  setControlFlag( 0 );
+  funControl( FUN_ON );
+  waitMotion( 1000 );
+  setControlFlag( 0 );
   translation_ideal.velocity = 0.0f;
   rotation_ideal.velocity = 0.0f;
   while( 1 );
