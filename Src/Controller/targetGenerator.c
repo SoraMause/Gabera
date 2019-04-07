@@ -130,12 +130,12 @@ void sideWallControl( void )
     // 2019 1/25 fl: , l: , fr: , r:
     if ( sen_fl.now > 120 && sen_fl.diff_1ms < 100 ){
       sidewall_control_value = (float)0.6f * ( sen_fl.now - 80 );
-    } else if ( sen_l.now > 850 && sen_l.diff_1ms < 100 ){
-      sidewall_control_value = (float)0.6f * ( sen_l.now - 740 );
+    } else if ( sen_l.now > 890 && sen_l.diff_1ms < 100 ){
+      sidewall_control_value = (float)0.6f * ( sen_l.now - 800 );
     } else if ( sen_fr.now > 120 && sen_fr.diff < 100 ){
       sidewall_control_value = (float)-0.6f * ( sen_fr.now - 80 );
-    } else if ( sen_r.now > 850 && sen_r.diff_1ms < 100 ){
-      sidewall_control_value = (float)-0.6f * ( sen_r.now - 740 );
+    } else if ( sen_r.now > 890 && sen_r.diff_1ms < 100 ){
+      sidewall_control_value = (float)-0.6f * ( sen_r.now - 800 );
     }
   } else {
     sidewall_control_value = 0.0f;
@@ -147,7 +147,7 @@ void frontWallControl( void )
 {
   // 前壁については普通にゲイン調整して合わせること。
   // 前壁制御フラグが1のときのみ制御を行う
-  if ( frontwall_control_flag == 1 && sen_front.is_wall == 1 && right_real.velocity < 350.0f ){
+  if ( frontwall_control_flag == 1 && sen_front.is_wall == 1 && right_real.velocity < 150.0f ){
     frontwall_control_value = (float) 0.5f * (sen_front.now - sen_front.reference);
   } else {
     frontwall_control_value = 0.0f;
@@ -161,38 +161,40 @@ void feedForwardTranslation( float left_vel, float right_vel, float accel, float
   float out_power = 0.0f;
   float out_duty = 0.0f;
   float real_accel = 0.0f;
-
-  // 中心速度を求め、mm/s から m/s に変換する
-  center_vel = (left_vel + right_vel) / 2000.0f;
   
   // モーターの逆起電力を計算する
   // モーターの回転数 * 逆起電力定数
   //motor_reverse_v = 30.0f * GEAR_RATION * center_vel / (3.141592f * MACHINE_WHEEL_RADIUS ) * MOTOR_REVERSE_VOLTAGE_CONSTANT; 
-  motor_reverse_v = 0.5648f * center_vel;
+  if ( accel != 0.0f ){
+      // 中心速度を求め、mm/s から m/s に変換する
+    center_vel = (left_vel + right_vel) / 2000.0f;
+    motor_reverse_v = 0.5648f * center_vel;
+  
+    real_accel = accel / 1000.0f; // accel mm/ss から m/ssに変更
+    // 並進方向の計算
+    //out_power = MACHINE_WHEEL_RADIUS * MACHINE_WEIGHT * accel / ( 2.0f * GEAR_RATION); 0.00018375f
+    // out_powerに摩擦力を考慮した値を追加で足している 27.48979459f
+    // 0.5 m/sのとき0.0003, 1.0 m / s 0.00065 
+    if ( accel > 0.0f ){
+      out_power = (real_accel + 2.1f) * 0.00018375f;
+    } else if ( accel == 0.0f ){
+      //out_power = 0.00020f * ( velocity / 1000.0f);
+      out_power = 0.0f;
+    } else {
+      out_power = real_accel * 0.00018375f;
+    }
+    
+    // 出力すべき値の計算
+    //out_duty = ( MOTOR_RESISTOR * out_power / MOTOR_TORQUE_CONSTANT +  motor_reverse_v ) / Vbat;
+    if ( backright_flag == 0 ){
+      out_duty = ( 691.92f * out_power + motor_reverse_v ) / vBat;
+    } else {
+      out_duty = 0.0f;
+    }
 
-  real_accel = accel / 1000.0f; // accel mm/ss から m/ssに変更
-  // 並進方向の計算
-  //out_power = MACHINE_WHEEL_RADIUS * MACHINE_WEIGHT * accel / ( 2.0f * GEAR_RATION); 0.00018375f
-  // out_powerに摩擦力を考慮した値を追加で足している 27.48979459f
-  // 0.5 m/sのとき0.0003, 1.0 m / s 0.00065 
-  if ( accel > 0.0f ){
-    out_power = (real_accel + 2.1f) * 0.00018375f;
-  } else if ( accel == 0.0f ){
-    //out_power = 0.00020f * ( velocity / 1000.0f);
-    out_power = 0.0f;
-  } else {
-    out_power = real_accel * 0.00018375f;
+    duty->left += (int32_t)(out_duty * 400);
+    duty->right += (int32_t)(out_duty * 400);
   }
-  
-  // 出力すべき値の計算
-  //out_duty = ( MOTOR_RESISTOR * out_power / MOTOR_TORQUE_CONSTANT +  motor_reverse_v ) / Vbat;
-  if ( backright_flag == 0 ){
-    out_duty = ( 691.92f * out_power + motor_reverse_v ) / vBat;
-  } else {
-    out_duty = 0.0f;
-  }
-  
-  duty->left += (int32_t)(out_duty * 400);
-  duty->right += (int32_t)(out_duty * 400);
-  
+
 }
+

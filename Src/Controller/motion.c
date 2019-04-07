@@ -249,7 +249,7 @@ void slaromLeftV90( void )
   dirwall_control_flag = 1;
   while( sen_l.now > sen_l.threshold && translation_ideal.distance < 15.0f );
   if ( translation_ideal.distance < 10.0f ){
-    translation_ideal.distance = 8.0f;
+    translation_ideal.distance = 6.4f;
   }
   setStraight( 11.0f, 0.0f, 1600.0f, 1600.0f, 1600.0f );
   waitStraight();
@@ -265,7 +265,7 @@ void slaromRightV90( void )
   dirwall_control_flag = 1;
   while( sen_r.now > sen_r.threshold && translation_ideal.distance < 15.0f );
   if ( translation_ideal.distance < 10.0f ){
-    translation_ideal.distance = 8.0f;
+    translation_ideal.distance = 6.4f;
   }
   setStraight( 11.0f, 0.0f, 1600.0f, 1600.0f, 1600.0f );
   waitStraight();
@@ -282,7 +282,7 @@ void slaromReturnDiaLeft45( void )
   dirwall_control_flag = 1;
   while( sen_l.now > sen_l.threshold && translation_ideal.distance < 15.0f );
   if ( translation_ideal.distance < 15.0f ){
-    translation_ideal.distance = 8.0f;
+    translation_ideal.distance = 6.4f;
   }
   setStraight( 49.0f, 0.0f, 1600.0f, 1600.0f, 1600.0f );
   waitStraight();
@@ -298,7 +298,7 @@ void slaromReturnDiaRight45( void )
   dirwall_control_flag = 1;
   while( sen_r.now > sen_r.threshold && translation_ideal.distance < 15.0f );
   if ( translation_ideal.distance < 15.0f ){
-    translation_ideal.distance = 8.0f;
+    translation_ideal.distance = 6.4f;
   }
   setStraight( 49.0f, 0.0f, 1600.0f, 1600.0f, 1600.0f );
   waitStraight();
@@ -314,6 +314,9 @@ void slaromReturnDiaLeft135( void )
 {
   dirwall_control_flag = 1;
   while( sen_l.now > sen_l.threshold && translation_ideal.distance < 15.0f );
+  if ( translation_ideal.distance < 15.0f ){
+    translation_ideal.distance = 6.4f;
+  }
   setStraight( 28.0f, 0.0, 1600.0f, 1600.0f, 1600.0f );
   waitStraight();
   setRotation( 135.0f, 30000.0f, 1200.0f, 1600.0f );
@@ -327,6 +330,9 @@ void slaromReturnDiaRight135( void )
 {
   dirwall_control_flag = 1;
   while( sen_r.now > sen_r.threshold && translation_ideal.distance < 15.0f );
+  if ( translation_ideal.distance < 15.0f ){
+    translation_ideal.distance = 6.4f;
+  }
   setStraight( 28.0f, 0.0, 1600.0f, 1600.0f, 1600.0f );
   waitStraight();
   setRotation( -135.0f, 30000.0f, 1200.0f, 1600.0f );

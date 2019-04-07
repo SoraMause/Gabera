@@ -100,7 +100,7 @@ void mode_init( void )
   setSlaromOffset( &slarom500, 18.5f, 19.5f, 18.5f, 19.5f, 7200.0f, 600.0f );
 
   setPIDGain( &translation_gain, 1.5f, 35.0f, 0.0f );  
-  setPIDGain( &rotation_gain, 0.39f, 14.0f, 0.85f ); 
+  setPIDGain( &rotation_gain, 0.39f, 16.0f, 0.55f ); 
   setPIDGain( &sensor_gain, 0.2f, 0.0f, 0.0f );
 
   setSenDiffValue( 7 );
