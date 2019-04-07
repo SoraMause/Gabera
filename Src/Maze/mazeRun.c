@@ -225,7 +225,7 @@ void adachiFastRunDiagonal1400( t_normal_param *translation, t_normal_param *rot
         fullColorLedOut( 0x02 );
         sidewall_control_flag = 1;
         while( sen_l.now > sen_l.threshold );
-        if ( translation_ideal.distance < 15.0f ) translation_ideal.distance = 9.8f;
+        if ( translation_ideal.distance < 15.0f ) translation_ideal.distance = 8.4f;
 
         setStraight( 20.0f, translation->accel, 1400.0f, 1400.0f, 1400.0f );
         waitStraight();
@@ -240,7 +240,7 @@ void adachiFastRunDiagonal1400( t_normal_param *translation, t_normal_param *rot
         fullColorLedOut( 0x02 );
         sidewall_control_flag = 1;
         while( sen_r.now > sen_r.threshold );
-        if ( translation_ideal.distance < 15.0f ) translation_ideal.distance = 9.8f;
+        if ( translation_ideal.distance < 15.0f ) translation_ideal.distance = 8.4f;
 
         setStraight( 20.0f, translation->accel, 1400.0f, 1400.0f, 1400.0f );
         waitStraight();
@@ -256,7 +256,7 @@ void adachiFastRunDiagonal1400( t_normal_param *translation, t_normal_param *rot
         fullColorLedOut( 0x03 );
         sidewall_control_flag = 1;
         while( sen_l.now > sen_l.threshold );
-        if ( translation_ideal.distance < 15.0f ) translation_ideal.distance = 9.8f;
+        if ( translation_ideal.distance < 15.0f ) translation_ideal.distance = 8.4f;
 
         setStraight( 30.0f, translation->accel, 1400.0f, 1400.0f, 1400.0f );
         waitStraight();
@@ -271,7 +271,7 @@ void adachiFastRunDiagonal1400( t_normal_param *translation, t_normal_param *rot
         fullColorLedOut( 0x03 );
         sidewall_control_flag = 1;
         while( sen_r.now > sen_r.threshold );
-        if ( translation_ideal.distance < 15.0f ) translation_ideal.distance = 9.8f;
+        if ( translation_ideal.distance < 15.0f ) translation_ideal.distance = 8.4f;
 
         setStraight( 30.0f, translation->accel, 1400.0f, 1400.0f, 1400.0f );
         waitStraight();
@@ -287,7 +287,7 @@ void adachiFastRunDiagonal1400( t_normal_param *translation, t_normal_param *rot
         fullColorLedOut( 0x04 );
         sidewall_control_flag = 1;
         while( sen_l.now > sen_l.threshold );
-        if ( translation_ideal.distance < 15.0f ) translation_ideal.distance = 9.8f;
+        if ( translation_ideal.distance < 15.0f ) translation_ideal.distance = 8.4f;
 
         setStraight( 17.0f, translation->accel, 1400.0f, 1400.0f, 1400.0f );
         waitStraight();
@@ -302,7 +302,7 @@ void adachiFastRunDiagonal1400( t_normal_param *translation, t_normal_param *rot
         fullColorLedOut( 0x04 );
         sidewall_control_flag = 1;
         while( sen_r.now > sen_r.threshold );
-        if ( translation_ideal.distance < 15.0f ) translation_ideal.distance = 9.8f;
+        if ( translation_ideal.distance < 15.0f ) translation_ideal.distance = 8.4f;
 
         setStraight( 17.0f, translation->accel, 1400.0f, 1400.0f, 1400.0f );
         waitStraight();
@@ -318,7 +318,7 @@ void adachiFastRunDiagonal1400( t_normal_param *translation, t_normal_param *rot
         fullColorLedOut( 0x05 );
         sidewall_control_flag = 1;
         while( sen_l.now > sen_l.threshold );
-        if ( translation_ideal.distance < 15.0f ) translation_ideal.distance = 9.8f;
+        if ( translation_ideal.distance < 15.0f ) translation_ideal.distance = 8.4f;
 
         setStraight( 40.0f, translation->accel, 1400.0f, 1400.0f, 1400.0f );
         waitStraight();
@@ -333,7 +333,7 @@ void adachiFastRunDiagonal1400( t_normal_param *translation, t_normal_param *rot
         fullColorLedOut( 0x05 );
         sidewall_control_flag = 1;
         while( sen_r.now > sen_r.threshold );
-        if ( translation_ideal.distance < 15.0f ) translation_ideal.distance = 9.8f;
+        if ( translation_ideal.distance < 15.0f ) translation_ideal.distance = 8.4f;
         
         setStraight( 40.0f, translation->accel, 1400.0f, 1400.0f, 1400.0f );
         waitStraight();
