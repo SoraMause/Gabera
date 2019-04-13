@@ -24,8 +24,8 @@
 #include "mazeRun.h"
 
 // ゴール座標の設定
-static uint8_t goal_x = 1;
-static uint8_t goal_y = 0;
+static uint8_t goal_x = 6;
+static uint8_t goal_y = 4;
 static uint8_t maze_goal_size = 1;
 
 void modeSelect( int8_t mode )
@@ -241,40 +241,46 @@ void mode2( void )
   certainLedOut( LED_OFF );
 
   setPIDGain( &translation_gain, 2.6f, 45.0f, 0.0f );  
-  setPIDGain( &rotation_gain, 0.55f, 55.0f, 0.25f ); 
+  
   setFrontWallP( 1.0f );
 
   if ( speed_count == 0 ){
     speed_count = PARAM_1400;
     setNormalRunParam( &run_param, 18000.0f, 1000.0f );       // 加速度、速度指定
     setNormalRunParam( &rotation_param, 6300.0f, 450.0f );  // 角加速度、角速度指定  
+    setPIDGain( &rotation_gain, 0.55f, 55.0f, 0.25f ); 
     setSenDiffValue( 35 ); 
   } else if ( speed_count == 1 ){
     speed_count = PARAM_1400;
     setNormalRunParam( &run_param, 18000.0f, 1000.0f );       // 加速度、速度指定
     setNormalRunParam( &rotation_param, 6300.0f, 450.0f );  // 角加速度、角速度指定  
+    setPIDGain( &rotation_gain, 0.55f, 55.0f, 0.25f ); 
     setSenDiffValue( 35 ); 
     _straight = 1;
   } else if ( speed_count == 2 ){
     speed_count = PARAM_1600;
     setNormalRunParam( &run_param, 20000.0f, 1000.0f );       // 加速度、速度指定
     setNormalRunParam( &rotation_param, 6300.0f, 450.0f );  // 角加速度、角速度指定  
+    setPIDGain( &rotation_gain, 0.55f, 60.0f, 0.25f ); 
     setSenDiffValue( 45 ); 
   } else if ( speed_count == 3 ){
     speed_count = PARAM_1600;
     setNormalRunParam( &run_param, 20000.0f, 1000.0f );       // 加速度、速度指定
     setNormalRunParam( &rotation_param, 6300.0f, 450.0f );  // 角加速度、角速度指定  
+    setPIDGain( &rotation_gain, 0.55f, 60.0f, 0.25f );
     setSenDiffValue( 45 ); 
     _straight = 1;
   } else if ( speed_count == 4 ){
     speed_count = PARAM_1700;
     setNormalRunParam( &run_param, 22000.0f, 1000.0f );       // 加速度、速度指定
     setNormalRunParam( &rotation_param, 6300.0f, 450.0f );  // 角加速度、角速度指定  
+    setPIDGain( &rotation_gain, 0.55f, 60.0f, 0.25f );
     setSenDiffValue( 150 ); 
   } else if ( speed_count == 5 ){
     speed_count = PARAM_1700;
     setNormalRunParam( &run_param, 22000.0f, 1000.0f );       // 加速度、速度指定
-    setNormalRunParam( &rotation_param, 6300.0f, 450.0f );  // 角加速度、角速度指定  
+    setNormalRunParam( &rotation_param, 6300.0f, 450.0f );  // 角加速度、角速度指定 
+    setPIDGain( &rotation_gain, 0.55f, 60.0f, 0.25f ); 
     setSenDiffValue( 150 ); 
     _straight = 1;
   } 
