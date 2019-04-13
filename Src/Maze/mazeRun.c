@@ -77,9 +77,12 @@ void adachiSearchRun( int8_t gx, int8_t gy, t_normal_param *translation, t_norma
   addWall( pos, bit ); 
   straightHalfBlockStop( translation->accel, translation->velocity );
   waitMotion( 300 );
-  pivoTurn180( rotation->accel, rotation->velocity );
-  adjBack();
-  mypos.direction = (mypos.direction + 2) % 4;
+  if ( mypos.x == gx && mypos.y == gy ){
+    pivoTurn180( rotation->accel, rotation->velocity );
+    adjBack();
+    mypos.direction = (mypos.direction + 2) % 4;
+  }
+
   setControlFlag( 0 );
   buzzerSetMonophonic( C_H_SCALE, 100 );
   waitMotion( 150 );
@@ -141,9 +144,11 @@ void adachiSearchRunKnown( int8_t gx, int8_t gy, t_normal_param *translation, t_
   addWall( pos, wall );
   addWall( pos, bit ); 
   straightHalfBlockStop( translation->accel, translation->velocity );
-  pivoTurn180( rotation->accel, rotation->velocity );
-  adjBack();
-  mypos.direction = (mypos.direction + 2) % 4;
+  if ( mypos.x == gx && mypos.y == gy ){
+    pivoTurn180( rotation->accel, rotation->velocity );
+    adjBack();
+    mypos.direction = (mypos.direction + 2) % 4;
+  }
   setControlFlag( 0 );
   buzzerSetMonophonic( C_H_SCALE, 100 );
   waitMotion( 150 );
@@ -225,7 +230,7 @@ void adachiFastRunDiagonal1400( t_normal_param *translation, t_normal_param *rot
         fullColorLedOut( 0x02 );
         sidewall_control_flag = 1;
         while( sen_l.now > sen_l.threshold );
-        if ( translation_ideal.distance < 15.0f ) translation_ideal.distance = 8.4f;
+        if ( translation_ideal.distance < 15.0f ) translation_ideal.distance = 9.8f;
 
         setStraight( 20.0f, translation->accel, 1400.0f, 1400.0f, 1400.0f );
         waitStraight();
@@ -256,7 +261,7 @@ void adachiFastRunDiagonal1400( t_normal_param *translation, t_normal_param *rot
         fullColorLedOut( 0x03 );
         sidewall_control_flag = 1;
         while( sen_l.now > sen_l.threshold );
-        if ( translation_ideal.distance < 15.0f ) translation_ideal.distance = 8.4f;
+        if ( translation_ideal.distance < 15.0f ) translation_ideal.distance = 9.8f;
 
         setStraight( 30.0f, translation->accel, 1400.0f, 1400.0f, 1400.0f );
         waitStraight();
@@ -287,7 +292,7 @@ void adachiFastRunDiagonal1400( t_normal_param *translation, t_normal_param *rot
         fullColorLedOut( 0x04 );
         sidewall_control_flag = 1;
         while( sen_l.now > sen_l.threshold );
-        if ( translation_ideal.distance < 15.0f ) translation_ideal.distance = 8.4f;
+        if ( translation_ideal.distance < 15.0f ) translation_ideal.distance = 9.8f;
 
         setStraight( 17.0f, translation->accel, 1400.0f, 1400.0f, 1400.0f );
         waitStraight();
@@ -318,7 +323,7 @@ void adachiFastRunDiagonal1400( t_normal_param *translation, t_normal_param *rot
         fullColorLedOut( 0x05 );
         sidewall_control_flag = 1;
         while( sen_l.now > sen_l.threshold );
-        if ( translation_ideal.distance < 15.0f ) translation_ideal.distance = 8.4f;
+        if ( translation_ideal.distance < 15.0f ) translation_ideal.distance = 9.8f;
 
         setStraight( 40.0f, translation->accel, 1400.0f, 1400.0f, 1400.0f );
         waitStraight();
@@ -457,8 +462,8 @@ void adachiFastRunDiagonal1400( t_normal_param *translation, t_normal_param *rot
 
   funControl( FUN_OFF );
   buzzerSetMonophonic( NORMAL, 100 );
-  setControlFlag( 0 );
   setLogFlag( 0 );
+  setControlFlag( 0 );
   waitMotion( 100 );
 }
 
@@ -597,8 +602,8 @@ void adachiFastRunDiagonal1600( t_normal_param *translation, t_normal_param *rot
 
   funControl( FUN_OFF );
   buzzerSetMonophonic( NORMAL, 100 );
-  setControlFlag( 0 );
   setLogFlag( 0 );
+  setControlFlag( 0 );
   waitMotion( 100 );
 }
 
@@ -865,7 +870,7 @@ void adachiFastRunDiagonal1700( t_normal_param *translation, t_normal_param *rot
 
   funControl( FUN_OFF );
   buzzerSetMonophonic( NORMAL, 100 );
-  setControlFlag( 0 );
   setLogFlag( 0 );
+  setControlFlag( 0 );
   waitMotion( 100 );
 }

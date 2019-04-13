@@ -99,9 +99,10 @@ void mode_init( void )
   // to do search param と fast paramで分けれるようにする
   setSlaromOffset( &slarom500, 18.5f, 19.5f, 18.5f, 19.5f, 7200.0f, 600.0f );
 
-  setPIDGain( &translation_gain, 1.5f, 35.0f, 0.0f );  
-  setPIDGain( &rotation_gain, 0.39f, 16.0f, 0.55f ); 
+  setPIDGain( &translation_gain, 1.0f, 30.0f, 0.0f );  
+  setPIDGain( &rotation_gain, 0.39f, 16.0f, 0.50f ); 
   setPIDGain( &sensor_gain, 0.2f, 0.0f, 0.0f );
+  setFrontWallP( 0.5f );
 
   setSenDiffValue( 7 );
 
@@ -240,7 +241,8 @@ void mode2( void )
   certainLedOut( LED_OFF );
 
   setPIDGain( &translation_gain, 2.6f, 45.0f, 0.0f );  
-  setPIDGain( &rotation_gain, 0.55f, 60.0f, 0.25f ); 
+  setPIDGain( &rotation_gain, 0.55f, 55.0f, 0.25f ); 
+  setFrontWallP( 1.0f );
 
   if ( speed_count == 0 ){
     speed_count = PARAM_1400;
@@ -423,12 +425,19 @@ void mode7( void )
 {
   startAction();
   
+  #if 0
   adjFront( 4000, 500.0f );
   //straightOneBlock( 500.0f );
   //straightOneBlock( 500.0f );
   //straightOneBlock( 500.0f );
   straightOneBlock( 500.0f );
   straightHalfBlockStop( 4000.0f, 500.0f );
+  #endif
+  dirwall_control_flag = 1;
+
+  setStraight( SLATING_ONE_BLOCK_DISTANCE * 3.0f, 4000.0f, 500.0f, 0.0f, 0.0f );
+  waitStraight();
+
   setLogFlag( 0 );
   setControlFlag( 0 );
   while( getPushsw() == 0 );

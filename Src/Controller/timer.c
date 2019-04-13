@@ -115,4 +115,5 @@ void interrupt( void )
 void setControlFlag( int8_t _flag )
 {
   control_flag = _flag;
+  waitMotion( 3 );
 }

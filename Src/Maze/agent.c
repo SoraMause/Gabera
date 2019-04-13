@@ -821,7 +821,7 @@ void setFastPathParameter1400( int8_t motion_buff[256], int8_t motion_data[256],
     motion_queue[*cnt_motion-1] = SET_FRONT_PD_STRAIGHT;
     // delay
     motion_buff[*cnt_motion] = end_maze;
-    motion_queue[*cnt_motion] = DELAY;
+    motion_queue[*cnt_motion] = FRONTPD_DELAY;
     (*cnt_motion)++;
     // cnt_motionにEND_MOTIONを入れてその後
     motion_buff[*cnt_motion] = end_maze;
