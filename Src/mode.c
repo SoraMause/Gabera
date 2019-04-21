@@ -275,13 +275,13 @@ void mode2( void )
     setNormalRunParam( &run_param, 22000.0f, 1000.0f );       // 加速度、速度指定
     setNormalRunParam( &rotation_param, 6300.0f, 450.0f );  // 角加速度、角速度指定  
     setPIDGain( &rotation_gain, 0.55f, 60.0f, 0.25f );
-    setSenDiffValue( 150 ); 
+    setSenDiffValue( 80 ); 
   } else if ( speed_count == 5 ){
     speed_count = PARAM_1700;
     setNormalRunParam( &run_param, 22000.0f, 1000.0f );       // 加速度、速度指定
     setNormalRunParam( &rotation_param, 6300.0f, 450.0f );  // 角加速度、角速度指定 
     setPIDGain( &rotation_gain, 0.55f, 60.0f, 0.25f ); 
-    setSenDiffValue( 150 ); 
+    setSenDiffValue( 80 ); 
     _straight = 1;
   } 
   
@@ -369,7 +369,8 @@ void mode4( void )
 void mode5( void )
 {
   setPIDGain( &translation_gain, 2.6f, 45.0f, 0.0f );  
-  setPIDGain( &rotation_gain, 0.55f, 60.0f, 0.25f ); 
+  setPIDGain( &rotation_gain, 0.70f, 65.0f, 0.30f ); 
+  setSenDiffValue( 80 );
   startAction();
 
   setControlFlag( 0 );
@@ -386,15 +387,31 @@ void mode5( void )
   setControlFlag( 1 );
 
   sidewall_control_flag = 1;
-  setStraight( 227.0f, 18000.0f, 1400.0f, 0.0f, 1400.0f );
+  setStraight( 227.0f, 20000.0f, 1700.0f, 0.0f, 1700.0f );
   waitStraight();
-  setStraight( 20.0f, 0.0f, 1400.0f, 1400.0f, 1400.0f );
+  sidewall_control_flag = 1;
+  setStraight( 21.0f, 0.0f, 1700.0f, 1700.0f, 1800.0f );
   waitStraight();
-  setRotation(90.0f, 12000.0f, 720.0f, 1400.0f);
+  setRotation( 135.0f, 26000.0f, 1200.0f, 1700.0f);
   waitRotation();
-  setStraight( 26.0f, 0.0f, 1400.0f, 1400.0f, 1400.0f);
+  setStraight( 29.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f);
   waitStraight();
-  setStraight( 180.0f, 18000.0f, 1400.0f, 1400.0f, 0.0f );
+
+  setStraight(11.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f);
+  waitStraight();
+  setRotation(-90.0f, 40000.0f, 1200.0f, 1700.0f);
+  waitRotation();
+  setStraight(24.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f);
+  waitStraight();
+
+  setStraight(11.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f);
+  waitStraight();
+  setRotation(135.0f, 30000.0f, 1200.0f, 1700.0f);
+  waitRotation();
+  setStraight(40.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f);
+  waitStraight();
+
+  setStraight( 180.0f, 20000.0f, 1700.0f, 1700.0f, 0.0f );
   waitStraight();
   
   waitMotion( 100 );

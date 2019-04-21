@@ -650,24 +650,24 @@ void adachiFastRunDiagonal1700( t_normal_param *translation, t_normal_param *rot
       case CENRTER_SLAROM_LEFT:
         fullColorLedOut( 0x02 );
         sidewall_control_flag = 1;
-        setStraight( 27.0f, translation->accel, 1700.0f, 1700.0f, 1700.0f );
+        setStraight( 19.0f, translation->accel, 1700.0f, 1700.0f, 1700.0f );
         waitStraight();
-        setRotation( 90.5f, 20000.0f, 900.0f, 1700.0f );
+        setRotation( 90.0f, 20000.0f, 840.0f, 1700.0f);
         waitRotation();
         sidewall_control_flag = 1;
-        setStraight( 34.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f );
+        setStraight( 33.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f);
         waitStraight();
         break;
 
       case CENRTER_SLAROM_RIGHT:
         fullColorLedOut( 0x02 );
         sidewall_control_flag = 1;
-        setStraight( 27.0f, translation->accel, 1700.0f, 1700.0f, 1700.0f );
+        setStraight( 19.0f, translation->accel, 1700.0f, 1700.0f, 1700.0f );
         waitStraight();
-        setRotation( -90.0f, 20000.0f, 900.0f, 1700.0f );
+        setRotation( -90.0f, 20000.0f, 840.0f, 1700.0f);
         waitRotation();
         sidewall_control_flag = 1;
-        setStraight( 34.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f );
+        setStraight( 33.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f);
         waitStraight();
         break;
 
@@ -675,24 +675,24 @@ void adachiFastRunDiagonal1700( t_normal_param *translation, t_normal_param *rot
       case SLAROM_LEFT_180:
         fullColorLedOut( 0x03 );
         sidewall_control_flag = 1;
-        setStraight( 35.0f, translation->accel, 1700.0f, 1700.0f, 1700.0f );
+        setStraight( 25.0f, translation->accel, 1700.0f, 1700.0f, 1700.0f );
         waitStraight();
-        setRotation( 180.0f, 26000.0f, 1100.0f, 1700.0f );
+        setRotation( 180.0f, 25000.0f, 1100.0f, 1700.0f );
         waitRotation();
         sidewall_control_flag = 1;
-        setStraight( 45.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f );
+        setStraight( 41.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f );
         waitStraight();
         break;
 
       case SLAROM_RIGHT_180:
         fullColorLedOut( 0x03 );
         sidewall_control_flag = 1;
-        setStraight( 35.0f, translation->accel, 1700.0f, 1700.0f, 1700.0f );
+        setStraight( 25.0f, translation->accel, 1700.0f, 1700.0f, 1700.0f );
         waitStraight();
-        setRotation( -180.0f, 26000.0f, 1100.0f, 1700.0f );
+        setRotation( -180.0f, 25000.0f, 1100.0f, 1700.0f );
         waitRotation();
         sidewall_control_flag = 1;
-        setStraight( 45.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f );
+        setStraight( 41.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f );
         waitStraight();
         break;
 
@@ -700,32 +700,24 @@ void adachiFastRunDiagonal1700( t_normal_param *translation, t_normal_param *rot
       case DIA_CENTER_LEFT:
         fullColorLedOut( 0x04 );
         sidewall_control_flag = 1;
-        setStraight( 11.0f, translation->accel, 1700.0f, 1700.0f, 1700.0f );
+        setStraight( 10.0f, translation->accel, 1700.0f, 1700.0f, 1700.0f );
         waitStraight();
-        setRotation( 45.0f, 25000.0f, 1000.0f, 1700.0f );
+        setRotation( 45.0f, 25000.0f, 1050.0f, 1700.0f );
         waitRotation();
         dirwall_control_flag = 1;
-        if ( motion_queue[motion_last+1] == DIA_LEFT_TURN || motion_queue[motion_last+1] == DIA_RIGHT_TURN ){
-          setStraight( 56.0f, 20000.0f, 1700.0f, 1700.0f, 1600.0f );
-        } else {
-          setStraight( 56.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f );
-        }
+        setStraight( 62.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f );
         waitStraight();
         break;
 
       case DIA_CENTER_RIGHT:
         fullColorLedOut( 0x04 );
         sidewall_control_flag = 1;
-        setStraight( 11.0f, translation->accel, 1700.0f, 1700.0f, 1700.0f );
+        setStraight( 10.0f, translation->accel, 1700.0f, 1700.0f, 1700.0f );
         waitStraight();
-        setRotation( -45.0f, 25000.0f, 1000.0f, 1700.0f );
+        setRotation( -45.0f, 25000.0f, 1050.0f, 1700.0f );
         waitRotation();
         dirwall_control_flag = 1;
-        if ( motion_queue[motion_last+1] == DIA_LEFT_TURN || motion_queue[motion_last+1] == DIA_RIGHT_TURN ){
-          setStraight( 56.0f, 20000.0f, 1700.0f, 1700.0f, 1600.0f );
-        } else {
-          setStraight( 56.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f );
-        }
+        setStraight( 62.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f );
         waitStraight();
         break;
 
@@ -733,32 +725,24 @@ void adachiFastRunDiagonal1700( t_normal_param *translation, t_normal_param *rot
       case DIA_CENTER_LEFT_135:
         fullColorLedOut( 0x05 );
         sidewall_control_flag = 1;
-        setStraight( 27.0f, translation->accel, 1700.0f, 1700.0f, 1700.0f );
+        setStraight( 21.0f, translation->accel, 1700.0f, 1700.0f, 1700.0f );
         waitStraight();
-        setRotation( 136.0f, 30000.0f, 1200.0f, 1700.0f );
+        setRotation( 135.0f, 26000.0f, 1200.0f, 1700.0f );
         waitRotation();
         dirwall_control_flag = 1;
-        if ( motion_queue[motion_last+1] == DIA_LEFT_TURN || motion_queue[motion_last+1] == DIA_RIGHT_TURN ){
-          setStraight( 20.0f, 20000.0f, 1700.0f, 1700.0f, 1600.0f );
-        } else {
-          setStraight( 20.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f );
-        }
+        setStraight( 29.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f );
         waitStraight();
         break;
 
       case DIA_CENTER_RIGHT_135:
         fullColorLedOut( 0x05 );
         sidewall_control_flag = 1;
-        setStraight( 27.0f, translation->accel, 1700.0f, 1700.0f, 1700.0f );
+        setStraight( 21.0f, translation->accel, 1700.0f, 1700.0f, 1700.0f );
         waitStraight();
-        setRotation( -135.0f, 30000.0f, 1200.0f, 1700.0f );
+        setRotation( -135.0f, 26000.0f, 1200.0f, 1700.0f );
         waitRotation();
         dirwall_control_flag = 1;
-        if ( motion_queue[motion_last+1] == DIA_LEFT_TURN || motion_queue[motion_last+1] == DIA_RIGHT_TURN ){
-          setStraight( 20.0f, 20000.0f, 1700.0f, 1700.0f, 1600.0f );
-        } else {
-          setStraight( 20.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f );
-        }
+        setStraight( 29.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f );
         waitStraight();
         break;
 
@@ -766,32 +750,24 @@ void adachiFastRunDiagonal1700( t_normal_param *translation, t_normal_param *rot
       case DIA_LEFT_TURN:
         fullColorLedOut( 0x06 );
         dirwall_control_flag = 1;
-        setStraight( 11.0f, 0.0f, 1600.0f, 1600.0f, 1600.0f );
+        setStraight( 11.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f );
         waitStraight();
-        setRotation( 90.0f, 30000.0f, 1200.0f, 1600.0f );
+        setRotation( 90.0f, 40000.0f, 1200.0f, 1700.0f );
         waitRotation();
-        sidewall_control_flag = 1;
-        if ( motion_queue[motion_last+1] == DIA_LEFT_TURN || motion_queue[motion_last+1] == DIA_RIGHT_TURN ){
-          setStraight( 21.0f, 0.0f, 1600.0f, 1600.0f, 1600.0f );
-        } else {
-          setStraight( 21.0f, 20000.0f, 1700.0f, 1600.0f, 1700.0f );
-        }
+        dirwall_control_flag = 1;
+        setStraight( 24.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f );
         waitStraight();
         break;
 
       case DIA_RIGHT_TURN:
         fullColorLedOut( 0x06 );
         dirwall_control_flag = 1;
-        setStraight( 11.0f, 0.0f, 1600.0f, 1600.0f, 1600.0f );
+        setStraight( 11.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f );
         waitStraight();
-        setRotation( -90.0f, 30000.0f, 1200.0f, 1600.0f );
+        setRotation( -90.0f, 40000.0f, 1200.0f, 1700.0f );
         waitRotation();
-        sidewall_control_flag = 1;
-        if ( motion_queue[motion_last+1] == DIA_LEFT_TURN || motion_queue[motion_last+1] == DIA_RIGHT_TURN ){
-          setStraight( 21.0f, 0.0f, 1600.0f, 1600.0f, 1600.0f );
-        } else {
-          setStraight( 21.0f, 20000.0f, 1700.0f, 1600.0f, 1700.0f );
-        }
+        dirwall_control_flag = 1;
+        setStraight( 24.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f );
         waitStraight();
         break;
 
@@ -799,9 +775,9 @@ void adachiFastRunDiagonal1700( t_normal_param *translation, t_normal_param *rot
       case RETURN_DIA_LEFT:
         fullColorLedOut( 0x07 );
         dirwall_control_flag = 1;
-        setStraight( 45.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f );
+        setStraight( 44.5f, 0.0f, 1700.0f, 1700.0f, 1700.0f );
         waitStraight();
-        setRotation( 47.0f, 25000.0f, 1000.0f, 1700.0f );
+        setRotation( 45.0f, 25000.0f, 1000.0f, 1700.0f );
         waitRotation();
         sidewall_control_flag = 1;
         setStraight( 22.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f );
@@ -811,7 +787,7 @@ void adachiFastRunDiagonal1700( t_normal_param *translation, t_normal_param *rot
       case RETURN_DIA_RIGHT:
         fullColorLedOut( 0x07 );
         dirwall_control_flag = 1;
-        setStraight( 45.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f );
+        setStraight( 44.5f, 0.0f, 1700.0f, 1700.0f, 1700.0f );
         waitStraight();
         setRotation( -45.0f, 25000.0f, 1000.0f, 1700.0f );
         waitRotation();
@@ -824,24 +800,24 @@ void adachiFastRunDiagonal1700( t_normal_param *translation, t_normal_param *rot
       case RETURN_DIA_LEFT_135:
         fullColorLedOut( 0x07 );
         dirwall_control_flag = 1;
-        setStraight( 15.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f );
+        setStraight( 11.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f );
         waitStraight();
-        setRotation( 136.0f, 30000.0f, 1200.0f, 1700.0f );
+        setRotation( 135.0f, 30000.0f, 1200.0f, 1700.0f );
         waitRotation();
         sidewall_control_flag = 1;
-        setStraight( 35.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f );
+        setStraight( 40.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f );
         waitStraight();
         break;
 
       case RETURN_DIA_RIGHT_135:
         fullColorLedOut( 0x07 );
         dirwall_control_flag = 1;
-        setStraight( 15.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f );
+        setStraight( 11.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f );
         waitStraight();
         setRotation( -135.0f, 30000.0f, 1200.0f, 1700.0f );
         waitRotation();
         sidewall_control_flag = 1;
-        setStraight( 35.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f );
+        setStraight( 40.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f );
         waitStraight();
         break;
 

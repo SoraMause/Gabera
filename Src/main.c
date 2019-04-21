@@ -187,7 +187,7 @@ int main(void)
       modeSelect( mode_counter );
     }
 
-    if ( batt_monitor < 7.2f ){
+    if ( batt_monitor < 7.3f ){
       while( 1 ){
         certainLedOut( 0x0f );
         fullColorLedOut( LED_RED );
