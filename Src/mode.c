@@ -100,7 +100,7 @@ void mode_init( void )
   setSlaromOffset( &slarom500, 18.5f, 19.5f, 18.5f, 19.5f, 7200.0f, 600.0f );
 
   setPIDGain( &translation_gain, 1.0f, 30.0f, 0.0f );  
-  setPIDGain( &rotation_gain, 0.39f, 16.0f, 0.50f ); 
+  setPIDGain( &rotation_gain, 0.39f, 15.0f, 0.50f ); 
   setPIDGain( &sensor_gain, 0.2f, 0.0f, 0.0f );
   setFrontWallP( 0.5f );
 
@@ -274,13 +274,13 @@ void mode2( void )
     speed_count = PARAM_1700;
     setNormalRunParam( &run_param, 22000.0f, 1000.0f );       // 加速度、速度指定
     setNormalRunParam( &rotation_param, 6300.0f, 450.0f );  // 角加速度、角速度指定  
-    setPIDGain( &rotation_gain, 0.55f, 60.0f, 0.25f );
+    setPIDGain( &rotation_gain, 0.70f, 65.0f, 0.30f ); 
     setSenDiffValue( 80 ); 
   } else if ( speed_count == 5 ){
     speed_count = PARAM_1700;
     setNormalRunParam( &run_param, 22000.0f, 1000.0f );       // 加速度、速度指定
     setNormalRunParam( &rotation_param, 6300.0f, 450.0f );  // 角加速度、角速度指定 
-    setPIDGain( &rotation_gain, 0.55f, 60.0f, 0.25f ); 
+    setPIDGain( &rotation_gain, 0.70f, 65.0f, 0.30f ); 
     setSenDiffValue( 80 ); 
     _straight = 1;
   } 
