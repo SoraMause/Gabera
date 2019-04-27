@@ -1,0 +1,69 @@
+ // 調整用プログラム
+
+  // 直線用
+  #if 0
+  startAction();
+  adjFront( 4000, 500.0f );
+  //straightOneBlock( 500.0f );
+  //straightOneBlock( 500.0f );
+  //straightOneBlock( 500.0f );
+  straightOneBlock( 500.0f );
+  straightHalfBlockStop( 4000.0f, 500.0f );
+
+  setControlFlag( 0 );
+  adcEnd();
+  funControl( FUN_OFF );
+  setLogFlag( 0 );
+  waitMotion( 1000 );
+  fullColorLedOut( 0x00 );
+  while( getPushsw() == 0 );
+  showLog(); 
+  #endif
+
+  // 調整用 ターン最短ファンを回す
+  #if 0
+  setPIDGain( &translation_gain, 2.6f, 45.0f, 0.0f );  
+  // 1800 調整必要, k = 300
+  setPIDGain( &rotation_gain, 0.90f, 65.0f, 0.35f ); 
+  setSenDiffValue( 150 );
+  startAction();
+
+  setControlFlag( 0 );
+  setLogFlag( 0 );
+  waitMotion( 500 );
+  funControl( FUN_ON );
+  fullColorLedOut( 0x04 );
+  waitMotion( 500 );
+  fullColorLedOut( 0x02 );
+  waitMotion( 500 );
+  fullColorLedOut( 0x01 );
+  waitMotion( 500 );
+  setLogFlag( 1 );
+  setControlFlag( 1 );
+
+  sidewall_control_flag = 1;
+  setStraight( 227.0f, 20000.0f, 1800.0f, 0.0f, 1800.0f );
+  waitStraight();
+
+  sidewall_control_flag = 1;
+  setStraight( 18.0f, 0.0f, 1800.0f, 1800.0f, 1800.0f );
+  waitStraight();
+  setRotation( 135.0f, 35000.0f, 1200.0f, 1800.0f);
+  waitRotation();
+  setStraight( 30.0f, 0.0f, 1800.0f, 1800.0f, 1800.0f);
+  waitStraight();
+
+  setStraight( 180.0f, 20000.0f, 1800.0f, 1800.0f, 0.0f );
+  waitStraight();
+  
+  waitMotion( 100 );
+
+  setControlFlag( 0 );
+  adcEnd();
+  funControl( FUN_OFF );
+  setLogFlag( 0 );
+  waitMotion( 1000 );
+  fullColorLedOut( 0x00 );
+  while( getPushsw() == 0 );
+  showLog(); 
+  #endif

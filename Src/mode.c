@@ -24,8 +24,8 @@
 #include "mazeRun.h"
 
 // ゴール座標の設定
-static uint8_t goal_x = 1;
-static uint8_t goal_y = 0;
+static uint8_t goal_x = 3;
+static uint8_t goal_y = 3;
 static uint8_t maze_goal_size = 1;
 
 void modeSelect( int8_t mode )
@@ -220,7 +220,7 @@ void mode2( void )
     if ( mode_distance > 30.0f ){
       speed_count++;
       mode_distance = 0.0f;
-      if ( speed_count > 5 ) speed_count = 0;
+      if ( speed_count > 7 ) speed_count = 0;
       buzzermodeSelect( speed_count );
       waitMotion( 300 );
     }
@@ -228,7 +228,7 @@ void mode2( void )
     if ( mode_distance < -30.0f ){
       speed_count--;
       mode_distance = 0.0f;
-      if ( speed_count < 0 ) speed_count = 5;
+      if ( speed_count < 0 ) speed_count = 7;
       buzzermodeSelect( speed_count );
       waitMotion( 300 );
     }
@@ -283,7 +283,20 @@ void mode2( void )
     setPIDGain( &rotation_gain, 0.70f, 65.0f, 0.30f ); 
     setSenDiffValue( 80 ); 
     _straight = 1;
-  } 
+  } else if ( speed_count == 6 ){
+    speed_count = PARAM_1800;
+    setNormalRunParam( &run_param, 22000.0f, 1000.0f );       // 加速度、速度指定
+    setNormalRunParam( &rotation_param, 6300.0f, 450.0f );  // 角加速度、角速度指定  
+    setPIDGain( &rotation_gain, 0.90f, 65.0f, 0.35f ); 
+    setSenDiffValue( 150 );
+  } else if ( speed_count == 7 ){
+    speed_count = PARAM_1800;
+    setNormalRunParam( &run_param, 22000.0f, 1000.0f );       // 加速度、速度指定
+    setNormalRunParam( &rotation_param, 6300.0f, 450.0f );  // 角加速度、角速度指定  
+    setPIDGain( &rotation_gain, 0.90f, 65.0f, 0.35f ); 
+    setSenDiffValue( 150 );
+    _straight = 1;
+  }
   
   
   if ( agentDijkstraRoute( goal_x, goal_y, &wall_data, MAZE_CLASSIC_SIZE, _straight, speed_count, 0 ) == 0 ){
@@ -298,6 +311,8 @@ void mode2( void )
     adachiFastRunDiagonal1600( &run_param, &rotation_param );
   }  else if ( speed_count == PARAM_1700 ){
     adachiFastRunDiagonal1700( &run_param, &rotation_param );
+  } else if ( speed_count == PARAM_1800 ){
+    adachiFastRunDiagonal1800( &run_param, &rotation_param );
   }
 
   // debug 
@@ -368,76 +383,20 @@ void mode4( void )
 // 重ね探索
 void mode5( void )
 {
-  setPIDGain( &translation_gain, 2.6f, 45.0f, 0.0f );  
-  // 1800 調整必要, k = 300
-  setPIDGain( &rotation_gain, 0.90f, 65.0f, 0.35f ); 
-  setSenDiffValue( 150 );
-  startAction();
 
-  setControlFlag( 0 );
-  setLogFlag( 0 );
-  waitMotion( 500 );
-  funControl( FUN_ON );
-  fullColorLedOut( 0x04 );
-  waitMotion( 500 );
-  fullColorLedOut( 0x02 );
-  waitMotion( 500 );
-  fullColorLedOut( 0x01 );
-  waitMotion( 500 );
-  setLogFlag( 1 );
-  setControlFlag( 1 );
-
-  sidewall_control_flag = 1;
-  setStraight( 227.0f, 20000.0f, 1800.0f, 0.0f, 1800.0f );
-  waitStraight();
-
-  sidewall_control_flag = 1;
-  setStraight( 18.0f, 0.0f, 1800.0f, 1800.0f, 1800.0f );
-  waitStraight();
-  setRotation( 135.0f, 35000.0f, 1200.0f, 1800.0f);
-  waitRotation();
-  setStraight( 30.0f, 0.0f, 1800.0f, 1800.0f, 1800.0f);
-  waitStraight();
-
-  setStraight(7.0f, 0.0f, 1800.0f, 1800.0f, 1800.0f);
-  waitStraight();
-  setRotation(-90.0f, 45000.0f, 1200.0f, 1800.0f);
-  waitRotation();
-  setStraight(24.0f, 0.0f, 1800.0f, 1800.0f, 1800.0f);
-  waitStraight();
-
-  setStraight(7.0f, 0.0f, 1800.0f, 1800.0f, 1800.0f);
-  waitStraight();
-  setRotation(90.0f, 45000.0f, 1200.0f, 1800.0f);
-  waitRotation();
-  setStraight(24.0f, 0.0f, 1800.0f, 1800.0f, 1800.0f);
-  waitStraight();
-
-  setStraight( 9.0f, 0.0f, 1800.0f, 1800.0f, 1800.0f );
-  waitStraight();
-  setRotation( -135.0f, 35000.0f, 1250.0f, 1800.0f);
-  waitRotation();
-  setStraight( 42.0f, 0.0f, 1800.0f, 1800.0f, 1800.0f);
-  waitStraight();
-
-  setStraight( 180.0f, 20000.0f, 1800.0f, 1800.0f, 0.0f );
-  waitStraight();
-  
-  waitMotion( 100 );
-
-  setControlFlag( 0 );
-  adcEnd();
-  funControl( FUN_OFF );
-  setLogFlag( 0 );
-  waitMotion( 1000 );
-  fullColorLedOut( 0x00 );
-  while( getPushsw() == 0 );
-  showLog(); 
 
 }
 
-// 回転方向のチェック
+
 void mode6( void )
+{
+ 
+}
+
+
+// case 7,8が基本的にはデバッグ用とする
+// 回転方向のチェック
+void mode7( void )
 {
   startAction();
   setRotation( 180.0f, 6300.0f, 540.0f, 0.0f );
@@ -450,32 +409,6 @@ void mode6( void )
   adcEnd();
   while( getPushsw() == 0 );
   showLog();
-}
-
-// スラロームチェック
-void mode7( void )
-{
-  //startAction();
-  
-  #if 0
-  adjFront( 4000, 500.0f );
-  //straightOneBlock( 500.0f );
-  //straightOneBlock( 500.0f );
-  //straightOneBlock( 500.0f );
-  straightOneBlock( 500.0f );
-  straightHalfBlockStop( 4000.0f, 500.0f );
-  #endif
-
-
-
-  setControlFlag( 0 );
-  adcEnd();
-  funControl( FUN_OFF );
-  setLogFlag( 0 );
-  waitMotion( 1000 );
-  fullColorLedOut( 0x00 );
-  while( getPushsw() == 0 );
-  showLog(); 
 }
 
 // 直進、回転組み合わせチェック 超進地旋回
@@ -491,5 +424,9 @@ void mode8( void )
   translation_ideal.velocity = 0.0f;
   rotation_ideal.velocity = 0.0f;
   while( 1 );
+
 }
 
+
+
+ 
