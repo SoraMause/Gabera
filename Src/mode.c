@@ -24,8 +24,8 @@
 #include "mazeRun.h"
 
 // ゴール座標の設定
-static uint8_t goal_x = 6;
-static uint8_t goal_y = 4;
+static uint8_t goal_x = 1;
+static uint8_t goal_y = 0;
 static uint8_t maze_goal_size = 1;
 
 void modeSelect( int8_t mode )

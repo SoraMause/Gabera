@@ -39,9 +39,9 @@ void slaromCenterRight135( float accel );
 void slaromLeftV90( void );
 void slaromRightV90( void );
 
-void slaromReturnDiaLeft45( void );
-void slaromReturnDiaRight45( void );
+void slaromReturnDiaLeft45( float accel );
+void slaromReturnDiaRight45( float accel );
 
-void slaromReturnDiaLeft135( void );
-void slaromReturnDiaRight135( void );
+void slaromReturnDiaLeft135( float accel );
+void slaromReturnDiaRight135( float accel );
 #endif /* __MOTION_H */

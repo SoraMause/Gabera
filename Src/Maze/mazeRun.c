@@ -237,7 +237,7 @@ void adachiFastRunDiagonal1400( t_normal_param *translation, t_normal_param *rot
         setRotation( 90.0f, 12000.0f, 720.0f, 1400.0f );
         waitRotation();
         sidewall_control_flag = 1;
-        setStraight( 26.0f, 0.0f, 1400.0f, 1400.0f, 1400.0f );
+        setStraight( 26.0f, translation->accel, 1400.0f, 1400.0f, fast_path[motion_last].end_speed );
         waitStraight();
         break;
 
@@ -252,7 +252,7 @@ void adachiFastRunDiagonal1400( t_normal_param *translation, t_normal_param *rot
         setRotation( -90.0f, 12000.0f, 720.0f, 1400.0f );
         waitRotation();
         sidewall_control_flag = 1;
-        setStraight( 26.0f, 0.0f, 1400.0f, 1400.0f, 1400.0f );
+        setStraight( 26.0f, translation->accel, 1400.0f, 1400.0f, fast_path[motion_last].end_speed );
         waitStraight();
         break;
 
@@ -268,7 +268,7 @@ void adachiFastRunDiagonal1400( t_normal_param *translation, t_normal_param *rot
         setRotation( 180.0f, 12000.0f, 960.0f, 1400.0f );
         waitRotation();
         sidewall_control_flag = 1;
-        setStraight( 47.0f, 0.0f, 1400.0f, 1400.0f, 1400.0f );
+        setStraight( 47.0f, translation->accel, 1400.0f, 1400.0f, fast_path[motion_last].end_speed );
         waitStraight();
         break;
 
@@ -283,7 +283,7 @@ void adachiFastRunDiagonal1400( t_normal_param *translation, t_normal_param *rot
         setRotation( -180.0f, 12000.0f, 960.0f, 1400.0f );
         waitRotation();
         sidewall_control_flag = 1;
-        setStraight( 47.0f, 0.0f, 1400.0f, 1400.0f, 1400.0f );
+        setStraight( 47.0f, translation->accel, 1400.0f, 1400.0f, fast_path[motion_last].end_speed );
         waitStraight();
         break;
 
@@ -390,7 +390,7 @@ void adachiFastRunDiagonal1400( t_normal_param *translation, t_normal_param *rot
         setRotation( 45.0f, 20000.0f, 900.0f, 1400.0f );
         waitRotation();
         dirwall_control_flag = 1;
-        setStraight( 21.0f, 0.0f, 1400.0f, 1400.0f, 1400.0f );
+        setStraight( 21.0f, translation->accel, 1400.0f, 1400.0f, fast_path[motion_last].end_speed );
         waitStraight();
         break;
 
@@ -404,7 +404,7 @@ void adachiFastRunDiagonal1400( t_normal_param *translation, t_normal_param *rot
         setRotation( -45.0f, 20000.0f, 900.0f, 1400.0f );
         waitRotation();
         sidewall_control_flag = 1;
-        setStraight( 21.0f, 0.0f, 1400.0f, 1400.0f, 1400.0f );
+        setStraight( 21.0f, translation->accel, 1400.0f, 1400.0f, fast_path[motion_last].end_speed );
         waitStraight();
         break;
 
@@ -419,7 +419,7 @@ void adachiFastRunDiagonal1400( t_normal_param *translation, t_normal_param *rot
         setRotation( 135.0f, 25000.0f, 1200.0f, 1400.0f );
         waitRotation();
         sidewall_control_flag = 1;
-        setStraight( 71.0f, 0.0f, 1400.0f, 1400.0f, 1400.0f );
+        setStraight( 71.0f, translation->accel, 1400.0f, 1400.0f, fast_path[motion_last].end_speed );
         waitStraight();
         break;
 
@@ -433,7 +433,7 @@ void adachiFastRunDiagonal1400( t_normal_param *translation, t_normal_param *rot
         setRotation( -135.0f, 25000.0f, 1200.0f, 1400.0f );
         waitRotation();
         sidewall_control_flag = 1;
-        setStraight( 71.0f, 0.0f, 1400.0f, 1400.0f, 1400.0f );
+        setStraight( 71.0f, translation->accel, 1400.0f, 1400.0f, fast_path[motion_last].end_speed );
         waitStraight();
         break;
 
@@ -558,23 +558,23 @@ void adachiFastRunDiagonal1600( t_normal_param *translation, t_normal_param *rot
       // 斜めから復帰
       case RETURN_DIA_LEFT:
         fullColorLedOut( 0x0f );
-        slaromReturnDiaLeft45();
+        slaromReturnDiaLeft45( translation->accel );
         break;
 
       case RETURN_DIA_RIGHT:
         fullColorLedOut( 0x0f );
-        slaromReturnDiaRight45();
+        slaromReturnDiaRight45( translation->accel );
         break;
 
       // 斜めから135度ターン復帰
       case RETURN_DIA_LEFT_135:
         fullColorLedOut( 0x06 );
-        slaromReturnDiaLeft135();
+        slaromReturnDiaLeft135( translation->accel );
         break;
 
       case RETURN_DIA_RIGHT_135:
         fullColorLedOut( 0x06 );
-        slaromReturnDiaRight135();
+        slaromReturnDiaRight135( translation->accel );
         break;
 
       case FRONTPD_DELAY:
@@ -653,7 +653,7 @@ void adachiFastRunDiagonal1700( t_normal_param *translation, t_normal_param *rot
         setRotation( 90.0f, 20000.0f, 840.0f, 1700.0f);
         waitRotation();
         sidewall_control_flag = 1;
-        setStraight( 33.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f);
+        setStraight( 33.0f, translation->accel, 1700.0f, 1700.0f, fast_path[motion_last].end_speed );
         waitStraight();
         break;
 
@@ -667,7 +667,7 @@ void adachiFastRunDiagonal1700( t_normal_param *translation, t_normal_param *rot
         setRotation( -90.0f, 20000.0f, 840.0f, 1700.0f);
         waitRotation();
         sidewall_control_flag = 1;
-        setStraight( 33.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f);
+        setStraight( 33.0f, translation->accel, 1700.0f, 1700.0f, fast_path[motion_last].end_speed );
         waitStraight();
         break;
 
@@ -682,7 +682,7 @@ void adachiFastRunDiagonal1700( t_normal_param *translation, t_normal_param *rot
         setRotation( 180.0f, 25000.0f, 1150.0f, 1700.0f );
         waitRotation();
         sidewall_control_flag = 1;
-        setStraight( 41.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f );
+        setStraight( 41.0f, translation->accel, 1700.0f, 1700.0f, fast_path[motion_last].end_speed );
         waitStraight();
         break;
 
@@ -696,7 +696,7 @@ void adachiFastRunDiagonal1700( t_normal_param *translation, t_normal_param *rot
         setRotation( -180.0f, 25000.0f, 1150.0f, 1700.0f );
         waitRotation();
         sidewall_control_flag = 1;
-        setStraight( 41.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f );
+        setStraight( 41.0f, translation->accel, 1700.0f, 1700.0f, fast_path[motion_last].end_speed );
         waitStraight();
         break;
 
@@ -798,7 +798,7 @@ void adachiFastRunDiagonal1700( t_normal_param *translation, t_normal_param *rot
         setRotation( 45.0f, 25000.0f, 1000.0f, 1700.0f );
         waitRotation();
         sidewall_control_flag = 1;
-        setStraight( 22.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f );
+        setStraight( 22.0f, translation->accel, 1700.0f, 1700.0f, fast_path[motion_last].end_speed );
         waitStraight();
         break;
 
@@ -812,7 +812,7 @@ void adachiFastRunDiagonal1700( t_normal_param *translation, t_normal_param *rot
         setRotation( -45.0f, 25000.0f, 1000.0f, 1700.0f );
         waitRotation();
         sidewall_control_flag = 1;
-        setStraight( 22.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f );
+        setStraight( 22.0f, translation->accel, 1700.0f, 1700.0f, fast_path[motion_last].end_speed );
         waitStraight();
         break;
 
@@ -827,7 +827,7 @@ void adachiFastRunDiagonal1700( t_normal_param *translation, t_normal_param *rot
         setRotation( 135.0f, 30000.0f, 1200.0f, 1700.0f );
         waitRotation();
         sidewall_control_flag = 1;
-        setStraight( 40.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f );
+        setStraight( 40.0f, translation->accel, 1700.0f, 1700.0f, fast_path[motion_last].end_speed );
         waitStraight();
         break;
 
@@ -841,7 +841,7 @@ void adachiFastRunDiagonal1700( t_normal_param *translation, t_normal_param *rot
         setRotation( -135.0f, 30000.0f, 1200.0f, 1700.0f );
         waitRotation();
         sidewall_control_flag = 1;
-        setStraight( 40.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f );
+        setStraight( 40.0f, translation->accel, 1700.0f, 1700.0f, fast_path[motion_last].end_speed );
         waitStraight();
         break;
 

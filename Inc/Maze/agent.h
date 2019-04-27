@@ -8,6 +8,7 @@
 #define PARAM_1400 0  // use fun 
 #define PARAM_1600 1	// use fun
 #define PARAM_1700 2
+#define MAX_PARAM 3	// 速度を複合
 
 // macro 定義( モーションの名前 )
 #define END                 0
@@ -79,6 +80,7 @@ int8_t agentDijkstraRoute( int16_t gx, int16_t gy, t_walldata *wall, uint8_t maz
 void setFastPathParameter1400( int8_t motion_buff[256], int8_t motion_data[256], uint8_t *cnt_motion, int8_t out_flag );
 void setFastPathParameter1600( int8_t motion_buff[256], int8_t motion_data[256], uint8_t *cnt_motion, int8_t out_flag );
 void setFastPathParameter1700( int8_t motion_buff[256], int8_t motion_data[256], uint8_t *cnt_motion, int8_t out_flag );
+void setFastPathParameterMax( int8_t motion_buff[256], int8_t motion_data[256], uint8_t *cnt_motion, int8_t out_flag );
 
 #endif /* __AGENT_H */
 

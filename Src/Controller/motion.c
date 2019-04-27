@@ -4,6 +4,8 @@
 
 #include "maze.h"
 
+#include "agent.h"
+
 void setSlaromOffset( t_slarom_parameter *slarom, float left_in, float left_out, float right_in, 
                       float right_out, float ang_accel, float max_ang_vel )
 {
@@ -121,7 +123,7 @@ void slaromCenterLeft( float accel )
   setRotation( 90.0f, 20000.0f, 900.0f, 1600.0f );
   waitRotation();
   sidewall_control_flag = 1;
-  setStraight( 43.0f, 0.0f, 1600.0f, 1600.0f, 1600.0f );
+  setStraight( 43.0f, accel, 1600.0f, 1600.0f, fast_path[motion_last].end_speed );
   waitStraight();
 }
 
@@ -135,7 +137,7 @@ void slaromCenterRight( float accel )
   setRotation( -90.0f, 20000.0f, 900.0f, 1600.0f );
   waitRotation();
   sidewall_control_flag = 1;
-  setStraight( 43.0f, 0.0f, 1600.0f, 1600.0f, 1600.0f );
+  setStraight( 43.0f, accel, 1600.0f, 1600.0f, fast_path[motion_last].end_speed );
   waitStraight();
 }
 
@@ -150,7 +152,7 @@ void slaromCenterLeft180( float accel )
   setRotation( 180.0f, 20000.0f, 1080.0f, 1600.0f );
   waitRotation();
   sidewall_control_flag = 1;
-  setStraight( 45.0f, 0.0f, 1600.0f, 1600.0f, 1600.0f );
+  setStraight( 45.0f, accel, 1600.0f, 1600.0f, fast_path[motion_last].end_speed );
   waitStraight();
 }
 
@@ -164,7 +166,7 @@ void slaromCenterRight180( float accel )
   setRotation( -180.0f, 20000.0f, 1080.0f, 1600.0f );
   waitRotation();
   sidewall_control_flag = 1;
-  setStraight( 45.0f, 0.0f, 1600.0f, 1600.0f, 1600.0f );
+  setStraight( 45.0f, accel, 1600.0f, 1600.0f, fast_path[motion_last].end_speed );
   waitStraight();
 
 }
@@ -257,7 +259,7 @@ void slaromRightV90( void )
 }
 
 // 斜めから復帰
-void slaromReturnDiaLeft45( void )
+void slaromReturnDiaLeft45( float accel )
 {
   dirwall_control_flag = 1;
   while( sen_l.now > sen_l.threshold && translation_ideal.distance < 10.0f );
@@ -267,11 +269,11 @@ void slaromReturnDiaLeft45( void )
   setRotation( 45.0f, 25000.0f, 900.0f, 1600.0f );
   waitRotation();
   sidewall_control_flag = 1;
-  setStraight( 22.0f, 0.0f, 1600.0f, 1600.0f, 1600.0f );
+  setStraight( 22.0f, accel, 1600.0f, 1600.0f, fast_path[motion_last].end_speed );
   waitStraight();
 }
 
-void slaromReturnDiaRight45( void )
+void slaromReturnDiaRight45( float accel )
 {
   dirwall_control_flag = 1;
   while( sen_r.now > sen_r.threshold && translation_ideal.distance < 10.0f );
@@ -281,12 +283,12 @@ void slaromReturnDiaRight45( void )
   setRotation( -45.0f, 25000.0f, 900.0f, 1600.0f );
   waitRotation();
   sidewall_control_flag = 1;
-  setStraight( 22.0f, 0.0f, 1600.0f, 1600.0f, 1600.0f );
+  setStraight( 22.0f, accel, 1600.0f, 1600.0f, fast_path[motion_last].end_speed );
   waitStraight();
 }
 
 // 斜めから135度ターン復帰
-void slaromReturnDiaLeft135( void )
+void slaromReturnDiaLeft135( float accel )
 {
   dirwall_control_flag = 1;
   while( sen_l.now > sen_l.threshold && translation_ideal.distance < 10.0f );
@@ -296,11 +298,11 @@ void slaromReturnDiaLeft135( void )
   setRotation( 135.0f, 30000.0f, 1200.0f, 1600.0f );
   waitRotation();
   sidewall_control_flag = 1;
-  setStraight( 53.0f, 0.0f, 1600.0f, 1600.0f, 1600.0f );
+  setStraight( 53.0f, accel, 1600.0f, 1600.0f, fast_path[motion_last].end_speed );
   waitStraight();
 }
 
-void slaromReturnDiaRight135( void )
+void slaromReturnDiaRight135( float accel )
 {
   dirwall_control_flag = 1;
   while( sen_r.now > sen_r.threshold && translation_ideal.distance < 10.0f );
@@ -310,6 +312,6 @@ void slaromReturnDiaRight135( void )
   setRotation( -135.0f, 30000.0f, 1200.0f, 1600.0f );
   waitRotation();
   sidewall_control_flag = 1;
-  setStraight( 53.0f, 0.0f, 1600.0f, 1600.0f, 1600.0f );
+  setStraight( 53.0f, accel, 1600.0f, 1600.0f, fast_path[motion_last].end_speed );
   waitStraight();
 }
