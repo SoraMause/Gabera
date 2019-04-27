@@ -24,8 +24,8 @@
 #include "mazeRun.h"
 
 // ゴール座標の設定
-static uint8_t goal_x = 6;
-static uint8_t goal_y = 4;
+static uint8_t goal_x = 1;
+static uint8_t goal_y = 0;
 static uint8_t maze_goal_size = 1;
 
 void modeSelect( int8_t mode )
@@ -369,8 +369,9 @@ void mode4( void )
 void mode5( void )
 {
   setPIDGain( &translation_gain, 2.6f, 45.0f, 0.0f );  
-  setPIDGain( &rotation_gain, 0.70f, 65.0f, 0.30f ); 
-  setSenDiffValue( 80 );
+  // 1800 調整必要, k = 300
+  setPIDGain( &rotation_gain, 0.90f, 65.0f, 0.35f ); 
+  setSenDiffValue( 150 );
   startAction();
 
   setControlFlag( 0 );
@@ -387,31 +388,39 @@ void mode5( void )
   setControlFlag( 1 );
 
   sidewall_control_flag = 1;
-  setStraight( 227.0f, 20000.0f, 1700.0f, 0.0f, 1700.0f );
+  setStraight( 227.0f, 20000.0f, 1800.0f, 0.0f, 1800.0f );
   waitStraight();
+
   sidewall_control_flag = 1;
-  setStraight( 21.0f, 0.0f, 1700.0f, 1700.0f, 1800.0f );
+  setStraight( 18.0f, 0.0f, 1800.0f, 1800.0f, 1800.0f );
   waitStraight();
-  setRotation( 135.0f, 26000.0f, 1200.0f, 1700.0f);
+  setRotation( 135.0f, 35000.0f, 1200.0f, 1800.0f);
   waitRotation();
-  setStraight( 29.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f);
+  setStraight( 30.0f, 0.0f, 1800.0f, 1800.0f, 1800.0f);
   waitStraight();
 
-  setStraight(11.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f);
+  setStraight(7.0f, 0.0f, 1800.0f, 1800.0f, 1800.0f);
   waitStraight();
-  setRotation(-90.0f, 40000.0f, 1200.0f, 1700.0f);
+  setRotation(-90.0f, 45000.0f, 1200.0f, 1800.0f);
   waitRotation();
-  setStraight(24.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f);
+  setStraight(24.0f, 0.0f, 1800.0f, 1800.0f, 1800.0f);
   waitStraight();
 
-  setStraight(11.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f);
+  setStraight(7.0f, 0.0f, 1800.0f, 1800.0f, 1800.0f);
   waitStraight();
-  setRotation(135.0f, 30000.0f, 1200.0f, 1700.0f);
+  setRotation(90.0f, 45000.0f, 1200.0f, 1800.0f);
   waitRotation();
-  setStraight(40.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f);
+  setStraight(24.0f, 0.0f, 1800.0f, 1800.0f, 1800.0f);
   waitStraight();
 
-  setStraight( 180.0f, 20000.0f, 1700.0f, 1700.0f, 0.0f );
+  setStraight( 9.0f, 0.0f, 1800.0f, 1800.0f, 1800.0f );
+  waitStraight();
+  setRotation( -135.0f, 35000.0f, 1250.0f, 1800.0f);
+  waitRotation();
+  setStraight( 42.0f, 0.0f, 1800.0f, 1800.0f, 1800.0f);
+  waitStraight();
+
+  setStraight( 180.0f, 20000.0f, 1800.0f, 1800.0f, 0.0f );
   waitStraight();
   
   waitMotion( 100 );
@@ -446,7 +455,7 @@ void mode6( void )
 // スラロームチェック
 void mode7( void )
 {
-  startAction();
+  //startAction();
   
   #if 0
   adjFront( 4000, 500.0f );
@@ -456,15 +465,17 @@ void mode7( void )
   straightOneBlock( 500.0f );
   straightHalfBlockStop( 4000.0f, 500.0f );
   #endif
-  dirwall_control_flag = 1;
 
-  setStraight( SLATING_ONE_BLOCK_DISTANCE * 3.0f, 4000.0f, 500.0f, 0.0f, 0.0f );
-  waitStraight();
 
-  setLogFlag( 0 );
+
   setControlFlag( 0 );
+  adcEnd();
+  funControl( FUN_OFF );
+  setLogFlag( 0 );
+  waitMotion( 1000 );
+  fullColorLedOut( 0x00 );
   while( getPushsw() == 0 );
-  showLog();
+  showLog(); 
 }
 
 // 直進、回転組み合わせチェック 超進地旋回
