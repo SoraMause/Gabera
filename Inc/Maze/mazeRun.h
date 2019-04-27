@@ -13,6 +13,5 @@ void adachiFastRun( t_normal_param *translation, t_normal_param *rotation );
 void adachiFastRunDiagonal1400( t_normal_param *translation, t_normal_param *rotation );
 void adachiFastRunDiagonal1600( t_normal_param *translation, t_normal_param *rotation );
 void adachiFastRunDiagonal1700( t_normal_param *translation, t_normal_param *rotation );
-void adachiFastRunDiagonal1800( t_normal_param *translation, t_normal_param *rotation );
 
 #endif /*__MAZE_RUN_H */

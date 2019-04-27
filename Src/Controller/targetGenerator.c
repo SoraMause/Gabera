@@ -3,7 +3,6 @@
 static float sidewall_control_value = 0.0f;
 static float frontwall_control_value = 0.0f;
 static float frontwall_p_gain = 0.5f;
-static float dia_fall_p_gain = 0.6f;
 
 static int16_t diff_value = 10;
 
@@ -15,11 +14,6 @@ void setSenDiffValue( int16_t value )
 void setFrontWallP( float _p_gain )
 {
   frontwall_p_gain = _p_gain;
-}
-
-void setDiaFallP( float _p_gain )
-{
-  dia_fall_p_gain = _p_gain;
 }
 
 void setPIDGain( t_PID_param *param, float kp, float ki, float kd )
@@ -141,13 +135,13 @@ void sideWallControl( void )
     // 4つのセンサのそれぞれの値の閾値を決めてそれに対して制御量を気持ち与える。
     // 2019 1/25 fl: , l: , fr: , r:
     if ( sen_fl.now > 130 && sen_fl.diff_1ms < 100 ){
-      sidewall_control_value = (float)(dia_fall_p_gain+0.4f) * ( sen_fl.now - 80 );
+      sidewall_control_value = (float)1.0f * ( sen_fl.now - 80 );
     } else if ( sen_l.now > 830 && sen_l.diff_1ms < 100 ){
-      sidewall_control_value = (float)dia_fall_p_gain * ( sen_l.now - 780 );
+      sidewall_control_value = (float)0.6f * ( sen_l.now - 780 );
     } else if ( sen_fr.now > 110 && sen_fr.diff_1ms < 100 ){
-      sidewall_control_value = (float)-(dia_fall_p_gain+0.4f) * ( sen_fr.now - 60 );
+      sidewall_control_value = (float)-1.0f * ( sen_fr.now - 60 );
     } else if ( sen_r.now > 810 && sen_r.diff_1ms < 100 ){
-      sidewall_control_value = (float)-dia_fall_p_gain * ( sen_r.now - 760 );
+      sidewall_control_value = (float)-0.6f * ( sen_r.now - 760 );
     }
   } else {
     sidewall_control_value = 0.0f;
