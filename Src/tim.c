@@ -48,6 +48,7 @@ TIM_MasterConfigTypeDef sMasterConfig;
 TIM_OC_InitTypeDef sConfigOC;
 
 static int32_t buzzer_period_buff = 0;
+static int32_t fun_duty = 30;
 
 /* USER CODE END 0 */
 
@@ -465,12 +466,17 @@ void HAL_TIM_PWM_MspDeInit(TIM_HandleTypeDef* tim_pwmHandle)
 } 
 
 /* USER CODE BEGIN 1 */
+void setFunDuty( int32_t _duty )
+{
+  fun_duty = _duty;
+}
+
 void funControl( uint8_t fun_mode )
 {
   int32_t pwm = 0;
 
   if ( fun_mode == FUN_ON ) {
-    pwm = 30;
+    pwm = fun_duty;
   }
 
   sConfigOC.OCMode = TIM_OCMODE_PWM1;

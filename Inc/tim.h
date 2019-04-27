@@ -71,6 +71,7 @@ void MX_TIM8_Init(void);
 void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
                                                             
 /* USER CODE BEGIN Prototypes */
+void setFunDuty( int32_t _duty );
 void funControl( uint8_t fun_mode );
 void buzzerPwmOut( uint32_t pwm, uint32_t period );
 void motorControl( int32_t pwm_l , int32_t pwm_r );
