@@ -1060,7 +1060,7 @@ void adachiFastRunDiagonalMax( t_normal_param *translation, t_normal_param *rota
         dirwall_control_flag = 1;
         while( sen_l.now > sen_l.threshold && translation_ideal.distance < 15.0f );
         if ( translation_ideal.distance < 15.0f ) translation_ideal.distance = 5.4f;
-        setStraight( 35.0f, 0.0f, 1800.0f, 1800.0f, 1800.0f );
+        setStraight( 36.0f, 0.0f, 1800.0f, 1800.0f, 1800.0f );
         waitStraight();
         setRotation( 45.0f, 25000.0f, 1000.0f, 1800.0f );
         waitRotation();
@@ -1074,7 +1074,7 @@ void adachiFastRunDiagonalMax( t_normal_param *translation, t_normal_param *rota
         dirwall_control_flag = 1;
         while( sen_r.now > sen_r.threshold && translation_ideal.distance < 15.0f );
         if ( translation_ideal.distance < 15.0f ) translation_ideal.distance = 5.4f;
-        setStraight( 35.0f, 0.0f, 1800.0f, 1800.0f, 1800.0f );
+        setStraight( 36.0f, 0.0f, 1800.0f, 1800.0f, 1800.0f );
         waitStraight();
         setRotation( -45.0f, 25000.0f, 1000.0f, 1800.0f );
         waitRotation();

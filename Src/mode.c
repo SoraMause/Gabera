@@ -221,6 +221,7 @@ void mode2( void )
       speed_count++;
       mode_distance = 0.0f;
       if ( speed_count > 7 ) speed_count = 0;
+      if ( batt_monitor < 7.6f && speed_count >5 ) speed_count = 5; 
       buzzermodeSelect( speed_count );
       waitMotion( 300 );
     }
@@ -229,6 +230,7 @@ void mode2( void )
       speed_count--;
       mode_distance = 0.0f;
       if ( speed_count < 0 ) speed_count = 7;
+      if ( batt_monitor < 7.6f && speed_count >5 ) speed_count = 5; 
       buzzermodeSelect( speed_count );
       waitMotion( 300 );
     }

@@ -1061,13 +1061,13 @@ void setFastPathParameterMax( int8_t motion_buff[256], int8_t motion_data[256], 
     if ( motion_queue[i] == SET_STRAIGHT ){
       fast_path[i].distance = motion_data[i] * ONE_BLOCK_DISTANCE;
       // to do 距離によって変更
-      if ( fast_path[i].distance > 10.0f * ONE_BLOCK_DISTANCE ) {
+      if ( fast_path[i].distance > 6.0f * ONE_BLOCK_DISTANCE ) {
          fast_path[i].speed = 5000.0f; 
-      } else if ( fast_path[i].distance > 8.0f * ONE_BLOCK_DISTANCE ) {
+      } else if ( fast_path[i].distance > 5.0f * ONE_BLOCK_DISTANCE ) {
         fast_path[i].speed = 4500.0f; 
-      } else if ( fast_path[i].distance > 6.0f * ONE_BLOCK_DISTANCE ) {
-        fast_path[i].speed = 4000.0f; 
       } else if ( fast_path[i].distance > 4.0f * ONE_BLOCK_DISTANCE ) {
+        fast_path[i].speed = 4000.0f; 
+      } else if ( fast_path[i].distance > 3.0f * ONE_BLOCK_DISTANCE ) {
         fast_path[i].speed = 3500.0f;
       } else if ( fast_path[i].distance > 2.0f * ONE_BLOCK_DISTANCE ){
         if ( motion_queue[i+1] == CENRTER_SLAROM_LEFT || motion_queue[i+1] == CENRTER_SLAROM_RIGHT ){
