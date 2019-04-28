@@ -289,13 +289,13 @@ void mode2( void )
     speed_count = MAX_PARAM;
     setNormalRunParam( &run_param, 22000.0f, 1000.0f );       // 加速度、速度指定
     setNormalRunParam( &rotation_param, 6300.0f, 450.0f );  // 角加速度、角速度指定  
-    setPIDGain( &rotation_gain, 0.90f, 80.0f, 0.30f ); 
+    setPIDGain( &rotation_gain, 0.95f, 80.0f, 0.30f ); 
     setSenDiffValue( 200 ); 
   } else if ( speed_count == 7 ){
     speed_count = MAX_PARAM;
     setNormalRunParam( &run_param, 22000.0f, 1000.0f );       // 加速度、速度指定
     setNormalRunParam( &rotation_param, 6300.0f, 450.0f );  // 角加速度、角速度指定 
-    setPIDGain( &rotation_gain, 0.90f, 80.0f, 0.30f ); 
+    setPIDGain( &rotation_gain, 0.95f, 80.0f, 0.30f ); 
     setSenDiffValue( 200 ); 
     _straight = 1;
   }

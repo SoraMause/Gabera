@@ -1007,7 +1007,7 @@ void adachiFastRunDiagonalMax( t_normal_param *translation, t_normal_param *rota
         setRotation( 135.0f, 35000.0f, 1200.0f, 1800.0f );
         waitRotation();
         dirwall_control_flag = 1;
-        setStraight( 30.0f, translation->accel, fast_path[motion_last].speed, 1800.0f, fast_path[motion_last].end_speed );
+        setStraight( 28.0f, translation->accel, fast_path[motion_last].speed, 1800.0f, fast_path[motion_last].end_speed );
         waitStraight();
         break;
 
@@ -1021,7 +1021,7 @@ void adachiFastRunDiagonalMax( t_normal_param *translation, t_normal_param *rota
         setRotation( -135.0f, 35000.0f, 1200.0f, 1800.0f );
         waitRotation();
         dirwall_control_flag = 1;
-        setStraight( 30.0f, translation->accel, fast_path[motion_last].speed, 1800.0f, fast_path[motion_last].end_speed );
+        setStraight( 28.0f, translation->accel, fast_path[motion_last].speed, 1800.0f, fast_path[motion_last].end_speed );
         waitStraight();
         break;
 
@@ -1072,8 +1072,8 @@ void adachiFastRunDiagonalMax( t_normal_param *translation, t_normal_param *rota
       case RETURN_DIA_RIGHT:
         fullColorLedOut( 0x07 );
         dirwall_control_flag = 1;
-        while( sen_r.now > sen_r.threshold && translation_ideal.distance < 15.0f );
-        if ( translation_ideal.distance < 15.0f ) translation_ideal.distance = 5.4f;
+        while( sen_r.now > sen_r.threshold && translation_ideal.distance < 10.0f );
+        if ( translation_ideal.distance < 10.0f ) translation_ideal.distance = 5.4f;
         setStraight( 36.0f, 0.0f, 1800.0f, 1800.0f, 1800.0f );
         waitStraight();
         setRotation( -45.0f, 25000.0f, 1000.0f, 1800.0f );
@@ -1087,8 +1087,8 @@ void adachiFastRunDiagonalMax( t_normal_param *translation, t_normal_param *rota
       case RETURN_DIA_LEFT_135:
         fullColorLedOut( 0x07 );
         dirwall_control_flag = 1;
-        while( sen_l.now > sen_l.threshold && translation_ideal.distance < 15.0f );
-        if ( translation_ideal.distance < 15.0f ) translation_ideal.distance = 5.4f;
+        while( sen_l.now > sen_l.threshold && translation_ideal.distance < 10.0f );
+        if ( translation_ideal.distance < 10.0f ) translation_ideal.distance = 5.4f;
         setStraight( 12.0f, 0.0f, 1800.0f, 1800.0f, 1800.0f );
         waitStraight();
         setRotation( 135.0f, 40000.0f, 1250.0f, 1800.0f );
