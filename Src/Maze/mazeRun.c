@@ -88,7 +88,7 @@ void adachiSearchRun( int8_t gx, int8_t gy, t_normal_param *translation, t_norma
   waitMotion( 150 );
 }
 
-void adachiSearchRunKnown( int8_t gx, int8_t gy, t_normal_param *translation, t_normal_param *rotation, t_walldata *wall, t_walldata *bit, t_position *pos, uint8_t maze_scale )
+void adachiSearchRunKnown( int8_t gx, int8_t gy, t_normal_param *translation, t_normal_param *rotation, t_walldata *wall, t_walldata *bit, t_position *pos, uint8_t maze_scale, uint8_t end_flag )
 {
   int8_t next_dir = front;
   int8_t block = 0;
@@ -137,7 +137,7 @@ void adachiSearchRunKnown( int8_t gx, int8_t gy, t_normal_param *translation, t_
     // 探索時間が2分30秒以上たっていた場合打ち切り。
     if( cnt_act > SEARCH_MAX_TIME ) break;
 
-    if ( checkAllSearch() == 1 && gx == 0 && gy ==0 ) break;
+    if ( checkAllSearch() == 1 && gx == 0 && gy ==0 && end_flag == 1 ) break;
 
   }
     
@@ -1002,12 +1002,12 @@ void adachiFastRunDiagonalMax( t_normal_param *translation, t_normal_param *rota
         sidewall_control_flag = 1;
         while( sen_l.now > sen_l.threshold );
         if ( translation_ideal.distance < 15.0f ) translation_ideal.distance = 8.5f;
-        setStraight( 18.0f, translation->accel, 1800.0f, 1800.0f, 1800.0f );
+        setStraight( 21.0f, translation->accel, 1700.0f, 1700.0f, 1700.0f );
         waitStraight();
-        setRotation( 135.0f, 35000.0f, 1200.0f, 1800.0f );
+        setRotation( 135.0f, 26000.0f, 1200.0f, 1700.0f );
         waitRotation();
         dirwall_control_flag = 1;
-        setStraight( 28.0f, translation->accel, fast_path[motion_last].speed, 1800.0f, fast_path[motion_last].end_speed );
+        setStraight( 29.0f, translation->accel, fast_path[motion_last].speed, 1700.0f, fast_path[motion_last].end_speed );
         waitStraight();
         break;
 
@@ -1016,12 +1016,12 @@ void adachiFastRunDiagonalMax( t_normal_param *translation, t_normal_param *rota
         sidewall_control_flag = 1;
         while( sen_r.now > sen_r.threshold );
         if ( translation_ideal.distance < 15.0f ) translation_ideal.distance = 8.5f;
-        setStraight( 18.0f, translation->accel, 1800.0f, 1800.0f, 1800.0f );
+        setStraight( 21.0f, translation->accel, 1700.0f, 1700.0f, 1700.0f );
         waitStraight();
-        setRotation( -135.0f, 35000.0f, 1200.0f, 1800.0f );
+        setRotation( -135.0f, 26000.0f, 1200.0f, 1700.0f );
         waitRotation();
         dirwall_control_flag = 1;
-        setStraight( 28.0f, translation->accel, fast_path[motion_last].speed, 1800.0f, fast_path[motion_last].end_speed );
+        setStraight( 29.0f, translation->accel, fast_path[motion_last].speed, 1700.0f, fast_path[motion_last].end_speed );
         waitStraight();
         break;
 
@@ -1088,27 +1088,27 @@ void adachiFastRunDiagonalMax( t_normal_param *translation, t_normal_param *rota
         fullColorLedOut( 0x07 );
         dirwall_control_flag = 1;
         while( sen_l.now > sen_l.threshold && translation_ideal.distance < 10.0f );
-        if ( translation_ideal.distance < 10.0f ) translation_ideal.distance = 5.4f;
-        setStraight( 12.0f, 0.0f, 1800.0f, 1800.0f, 1800.0f );
+        if ( translation_ideal.distance < 10.0f ) translation_ideal.distance = 5.1f;
+        setStraight( 11.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f );
         waitStraight();
-        setRotation( 135.0f, 40000.0f, 1250.0f, 1800.0f );
+        setRotation( 135.0f, 30000.0f, 1200.0f, 1700.0f );
         waitRotation();
         sidewall_control_flag = 1;
-        setStraight( 43.0f, translation->accel, fast_path[motion_last].speed, 1800.0f, fast_path[motion_last].end_speed );
+        setStraight( 40.0f, translation->accel, fast_path[motion_last].speed, 1700.0f, fast_path[motion_last].end_speed );
         waitStraight();
         break;
 
       case RETURN_DIA_RIGHT_135:
         fullColorLedOut( 0x07 );
         dirwall_control_flag = 1;
-        while( sen_r.now > sen_r.threshold && translation_ideal.distance < 15.0f );
-        if ( translation_ideal.distance < 15.0f ) translation_ideal.distance = 5.4f;
-        setStraight( 12.0f, 0.0f, 1800.0f, 1800.0f, 1800.0f );
+        while( sen_r.now > sen_r.threshold && translation_ideal.distance < 10.0f );
+        if ( translation_ideal.distance < 15.0f ) translation_ideal.distance = 5.1f;
+        setStraight( 11.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f );
         waitStraight();
-        setRotation( -135.0f, 40000.0f, 1250.0f, 1800.0f );
+        setRotation( -135.0f, 30000.0f, 1200.0f, 1700.0f );
         waitRotation();
         sidewall_control_flag = 1;
-        setStraight( 43.0f, translation->accel, fast_path[motion_last].speed, 1800.0f, fast_path[motion_last].end_speed );
+        setStraight( 40.0f, translation->accel, fast_path[motion_last].speed, 1700.0f, fast_path[motion_last].end_speed );
         waitStraight();
         break;
 

@@ -261,39 +261,39 @@ void mode2( void )
     speed_count = PARAM_1600;
     setNormalRunParam( &run_param, 20000.0f, 1000.0f );       // 加速度、速度指定
     setNormalRunParam( &rotation_param, 6300.0f, 450.0f );  // 角加速度、角速度指定  
-    setPIDGain( &rotation_gain, 0.55f, 60.0f, 0.25f ); 
+    setPIDGain( &rotation_gain, 0.60f, 60.0f, 0.25f ); 
     setSenDiffValue( 45 ); 
   } else if ( speed_count == 3 ){
     speed_count = PARAM_1600;
     setNormalRunParam( &run_param, 20000.0f, 1000.0f );       // 加速度、速度指定
     setNormalRunParam( &rotation_param, 6300.0f, 450.0f );  // 角加速度、角速度指定  
-    setPIDGain( &rotation_gain, 0.55f, 60.0f, 0.25f );
+    setPIDGain( &rotation_gain, 0.60f, 60.0f, 0.25f );
     setSenDiffValue( 45 ); 
     _straight = 1;
   } else if ( speed_count == 4 ){
     speed_count = PARAM_1700;
     setNormalRunParam( &run_param, 22000.0f, 1000.0f );       // 加速度、速度指定
     setNormalRunParam( &rotation_param, 6300.0f, 450.0f );  // 角加速度、角速度指定  
-    setPIDGain( &rotation_gain, 0.70f, 65.0f, 0.30f ); 
+    setPIDGain( &rotation_gain, 0.80f, 65.0f, 0.30f ); 
     setSenDiffValue( 80 ); 
   } else if ( speed_count == 5 ){
     speed_count = PARAM_1700;
     setNormalRunParam( &run_param, 22000.0f, 1000.0f );       // 加速度、速度指定
     setNormalRunParam( &rotation_param, 6300.0f, 450.0f );  // 角加速度、角速度指定 
-    setPIDGain( &rotation_gain, 0.70f, 65.0f, 0.30f ); 
+    setPIDGain( &rotation_gain, 0.80f, 65.0f, 0.30f ); 
     setSenDiffValue( 80 ); 
     _straight = 1;
   } else if ( speed_count == 6 ){
     speed_count = MAX_PARAM;
     setNormalRunParam( &run_param, 22000.0f, 1000.0f );       // 加速度、速度指定
     setNormalRunParam( &rotation_param, 6300.0f, 450.0f );  // 角加速度、角速度指定  
-    setPIDGain( &rotation_gain, 0.95f, 80.0f, 0.30f ); 
+    setPIDGain( &rotation_gain, 1.05f, 80.0f, 0.30f ); 
     setSenDiffValue( 200 ); 
   } else if ( speed_count == 7 ){
     speed_count = MAX_PARAM;
     setNormalRunParam( &run_param, 22000.0f, 1000.0f );       // 加速度、速度指定
     setNormalRunParam( &rotation_param, 6300.0f, 450.0f );  // 角加速度、角速度指定 
-    setPIDGain( &rotation_gain, 0.95f, 80.0f, 0.30f ); 
+    setPIDGain( &rotation_gain, 1.05f, 80.0f, 0.30f ); 
     setSenDiffValue( 200 ); 
     _straight = 1;
   }
@@ -342,6 +342,7 @@ void mode3( void )
   if ( wall_data.save == 1 ){
     //agentSetShortRoute( goal_x, goal_y, &wall_data, MAZE_CLASSIC_SIZE, 1, 0 );
     agentDijkstraRoute( goal_x, goal_y, &wall_data, MAZE_CLASSIC_SIZE, 0, PARAM_1400, 1 );
+    agentDijkstraRoute( goal_x, goal_y, &wall_data, MAZE_CLASSIC_SIZE, 0, MAX_PARAM, 1 );
   }
   
 }
@@ -358,7 +359,7 @@ void mode4( void )
 
   startAction();
 
-  adachiSearchRunKnown( goal_x, goal_y, &run_param, &rotation_param, &wall_data, &wall_bit, &mypos, MAZE_CLASSIC_SIZE );
+  adachiSearchRunKnown( goal_x, goal_y, &run_param, &rotation_param, &wall_data, &wall_bit, &mypos, MAZE_CLASSIC_SIZE, 0 );
   adcEnd();
   setControlFlag( 0 );
   writeFlashData( &wall_bit );
@@ -373,7 +374,7 @@ void mode4( void )
   } else {
     adcStart();
     setControlFlag( 1 );
-    adachiSearchRunKnown( 0, 0, &run_param, &rotation_param, &wall_data, &wall_bit, &mypos, MAZE_CLASSIC_SIZE );
+    adachiSearchRunKnown( 0, 0, &run_param, &rotation_param, &wall_data, &wall_bit, &mypos, MAZE_CLASSIC_SIZE, 1 );
     adcEnd();
     setControlFlag( 0 );
     writeFlashData( &wall_bit );
@@ -384,62 +385,60 @@ void mode4( void )
 // 重ね探索
 void mode5( void )
 {
-  setPIDGain( &translation_gain, 2.6f, 45.0f, 0.0f );  
-  setPIDGain( &rotation_gain, 0.70f, 65.0f, 0.30f ); 
-  setSenDiffValue( 80 );
+  setNormalRunParam( &run_param, 4000.0f, 500.0f );       // 加速度、探索速度指定
+  setNormalRunParam( &rotation_param, 5400.0f, 450.0f );  // 角加速度、角速度指定
+  wall_Init( &wall_data, MAZE_CLASSIC_SIZE );
+  wallBIt_Init( &wall_bit, MAZE_CLASSIC_SIZE );
+  setMazeGoalSize( maze_goal_size );
+  positionReset( &mypos );
+
   startAction();
 
+  adachiSearchRunKnown( goal_x, goal_y, &run_param, &rotation_param, &wall_data, &wall_bit, &mypos, MAZE_CLASSIC_SIZE, 0 );
+  adcEnd();
   setControlFlag( 0 );
-  setLogFlag( 0 );
-  waitMotion( 500 );
-  funControl( FUN_ON );
-  fullColorLedOut( 0x04 );
-  waitMotion( 500 );
-  fullColorLedOut( 0x02 );
-  waitMotion( 500 );
+  writeFlashData( &wall_bit );
+  setVirtualGoal( MAZE_CLASSIC_SIZE, &wall_data );
+
+  adcStart();
+  setControlFlag( 1 );
+  adachiSearchRunKnown( 0, 0, &run_param, &rotation_param, &wall_data, &wall_bit, &mypos, MAZE_CLASSIC_SIZE, 0 );
+  adcEnd();
+  setControlFlag( 0 );
+  writeFlashData( &wall_bit );
+  
+  waitMotion( 1000 );
+  fullColorLedOut( 0x07 );
+
+  loadWallData( &wall_data );
+  positionReset( &mypos );
+
+  setPIDGain( &translation_gain, 2.6f, 45.0f, 0.0f );  
+  setFrontWallP( 1.0f );
+  setNormalRunParam( &run_param, 20000.0f, 1000.0f );       // 加速度、速度指定
+  setNormalRunParam( &rotation_param, 6300.0f, 450.0f );  // 角加速度、角速度指定  
+  setPIDGain( &rotation_gain, 0.60f, 60.0f, 0.25f );
+  setSenDiffValue( 45 ); 
+
+  waitMotion( 1000 );
+
   fullColorLedOut( 0x01 );
+
+  if ( agentDijkstraRoute( goal_x, goal_y, &wall_data, MAZE_CLASSIC_SIZE, 1, PARAM_1600, 0 ) == 0 ){
+    return;
+  }
+
   waitMotion( 500 );
+  MPU6500_z_axis_offset_calc_start();
+  while( MPU6500_calc_check() ==  0 );
+  fullColorLedOut( LED_OFF );
+  adcStart();
+  waitMotion( 100 );
   setLogFlag( 1 );
   setControlFlag( 1 );
 
-  sidewall_control_flag = 1;
-  setStraight( 227.0f, 20000.0f, 1700.0f, 0.0f, 1700.0f );
-  waitStraight();
-  sidewall_control_flag = 1;
-  setStraight( 21.0f, 0.0f, 1700.0f, 1700.0f, 1800.0f );
-  waitStraight();
-  setRotation( 135.0f, 26000.0f, 1200.0f, 1700.0f);
-  waitRotation();
-  setStraight( 29.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f);
-  waitStraight();
+  adachiFastRunDiagonal1600( &run_param, &rotation_param );
 
-  setStraight(11.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f);
-  waitStraight();
-  setRotation(-90.0f, 40000.0f, 1200.0f, 1700.0f);
-  waitRotation();
-  setStraight(24.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f);
-  waitStraight();
-
-  setStraight(11.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f);
-  waitStraight();
-  setRotation(135.0f, 30000.0f, 1200.0f, 1700.0f);
-  waitRotation();
-  setStraight(40.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f);
-  waitStraight();
-
-  setStraight( 180.0f, 20000.0f, 1700.0f, 1700.0f, 0.0f );
-  waitStraight();
-  
-  waitMotion( 100 );
-
-  setControlFlag( 0 );
-  adcEnd();
-  funControl( FUN_OFF );
-  setLogFlag( 0 );
-  waitMotion( 1000 );
-  fullColorLedOut( 0x00 );
-  while( getPushsw() == 0 );
-  showLog(); 
 
 }
 

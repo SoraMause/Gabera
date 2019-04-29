@@ -792,12 +792,12 @@ void setFastPathParameter1400( int8_t motion_buff[256], int8_t motion_data[256],
   // 停止する前に前壁制御を有効にしたdelay
   if ( motion_queue[*cnt_motion-2] != SET_STRAIGHT ){
     // 終了速度を低速のまま
-    fast_path[*cnt_motion-2].end_speed = 1400.0f;
+    fast_path[*cnt_motion-2].end_speed = 1000.0f;
     // 次の動作をEND_MOTIONから直線30mm 停止へ
     motion_buff[*cnt_motion-1] = front;
-    fast_path[*cnt_motion-1].distance = 10.0f;
-    fast_path[*cnt_motion-1].speed = 100.0f;
-    fast_path[*cnt_motion-1].start_speed = 1400.0f;
+    fast_path[*cnt_motion-1].distance = 25.0f;
+    fast_path[*cnt_motion-1].speed = 1000.0f;
+    fast_path[*cnt_motion-1].start_speed = 1000.0f;
     fast_path[*cnt_motion-1].end_speed = 0.0f;
     // 壁制御を有効なストレートモードを作成すること
     motion_queue[*cnt_motion-1] = SET_FRONT_PD_STRAIGHT;
@@ -823,7 +823,7 @@ void setFastPathParameter1400( int8_t motion_buff[256], int8_t motion_data[256],
     motion_queue[*cnt_motion-1] = SET_FRONT_PD_STRAIGHT;
     // delay
     motion_buff[*cnt_motion] = end_maze;
-    motion_queue[*cnt_motion] = FRONTPD_DELAY;
+    motion_queue[*cnt_motion] = DELAY;
     (*cnt_motion)++;
     // cnt_motionにEND_MOTIONを入れてその後
     motion_buff[*cnt_motion] = end_maze;
@@ -898,12 +898,12 @@ void setFastPathParameter1600( int8_t motion_buff[256], int8_t motion_data[256],
   // 停止する前に前壁制御を有効にしたdelay
   if ( motion_queue[*cnt_motion-2] != SET_STRAIGHT ){
     // 終了速度を低速のまま
-    fast_path[*cnt_motion-2].end_speed = 1600.0f;
+    fast_path[*cnt_motion-2].end_speed = 1000.0f;
     // 次の動作をEND_MOTIONから直線30mm 停止へ
     motion_buff[*cnt_motion-1] = front;
-    fast_path[*cnt_motion-1].distance = 10.0f;
-    fast_path[*cnt_motion-1].speed = 100.0f;
-    fast_path[*cnt_motion-1].start_speed = 1600.0f;
+    fast_path[*cnt_motion-1].distance = 25.0f;
+    fast_path[*cnt_motion-1].speed = 1000.0f;
+    fast_path[*cnt_motion-1].start_speed = 1000.0f;
     fast_path[*cnt_motion-1].end_speed = 0.0f;
     // 壁制御を有効なストレートモードを作成すること
     motion_queue[*cnt_motion-1] = SET_FRONT_PD_STRAIGHT;
@@ -1004,12 +1004,12 @@ void setFastPathParameter1700( int8_t motion_buff[256], int8_t motion_data[256],
   // 停止する前に前壁制御を有効にしたdelay
   if ( motion_queue[*cnt_motion-2] != SET_STRAIGHT ){
     // 終了速度を低速のまま
-    fast_path[*cnt_motion-2].end_speed = 1700.0f;
+    fast_path[*cnt_motion-2].end_speed = 1000.0f;
     // 次の動作をEND_MOTIONから直線30mm 停止へ
     motion_buff[*cnt_motion-1] = front;
-    fast_path[*cnt_motion-1].distance = 10.0f;
-    fast_path[*cnt_motion-1].speed = 100.0f;
-    fast_path[*cnt_motion-1].start_speed = 1700.0f;
+    fast_path[*cnt_motion-1].distance = 25.0f;
+    fast_path[*cnt_motion-1].speed = 1000.0f;
+    fast_path[*cnt_motion-1].start_speed = 1000.0f;
     fast_path[*cnt_motion-1].end_speed = 0.0f;
     // 壁制御を有効なストレートモードを作成すること
     motion_queue[*cnt_motion-1] = SET_FRONT_PD_STRAIGHT;
@@ -1099,6 +1099,9 @@ void setFastPathParameterMax( int8_t motion_buff[256], int8_t motion_data[256], 
       } else if ( motion_queue[i+1] == SLAROM_LEFT_180 || motion_queue[i+1] == SLAROM_RIGHT_180 ){
         // 大廻180度なら
         fast_path[i].end_speed = 1900.0f;
+      } else if ( motion_queue[i+1] == DIA_CENTER_LEFT_135 || motion_queue[i+1] == DIA_CENTER_RIGHT_135 ){
+        // 135度なら
+        fast_path[i].end_speed = 1700.0f;
       } else {
         fast_path[i].end_speed = 1800.0f;
       }
@@ -1116,6 +1119,10 @@ void setFastPathParameterMax( int8_t motion_buff[256], int8_t motion_data[256], 
         // 大廻180度なら
         fast_path[i].speed = 2000.0f;
         fast_path[i].end_speed = 1900.0f;
+      } else if ( motion_queue[i+1] == DIA_CENTER_LEFT_135 || motion_queue[i+1] == DIA_CENTER_RIGHT_135 ){
+        // 135度なら
+        fast_path[i].speed = 2000.0f;
+        fast_path[i].end_speed = 1700.0f;
       } else {
         fast_path[i].speed = 2000.0f;
         fast_path[i].end_speed = 1800.0f;
@@ -1133,6 +1140,10 @@ void setFastPathParameterMax( int8_t motion_buff[256], int8_t motion_data[256], 
         // 大廻180度なら
         fast_path[i].speed = 1900.0f;
         fast_path[i].end_speed = 1900.0f;
+      } else if ( motion_queue[i+1] == DIA_CENTER_LEFT_135 || motion_queue[i+1] == DIA_CENTER_RIGHT_135 ){
+        // 135度なら
+        fast_path[i].speed = 1900.0f;
+        fast_path[i].end_speed = 1700.0f;
       } else {
         fast_path[i].speed = 1900.0f;
         fast_path[i].end_speed = 1800.0f;
@@ -1146,6 +1157,10 @@ void setFastPathParameterMax( int8_t motion_buff[256], int8_t motion_data[256], 
         // V90の時は速度1700に落とす
         fast_path[i].speed = 1800.0f;
         fast_path[i].end_speed = 1700.0f;
+      } else if ( motion_queue[i+1] == RETURN_DIA_LEFT_135 || motion_queue[i+1] == RETURN_DIA_RIGHT_135 ){
+        // 135度復帰の時は速度1700に落とす
+        fast_path[i].speed = 1800.0f;
+        fast_path[i].end_speed = 1700.0f;
       } else {
         // 復帰の場合は速度を1800にする
         fast_path[i].speed = 1800.0f;
@@ -1157,8 +1172,12 @@ void setFastPathParameterMax( int8_t motion_buff[256], int8_t motion_data[256], 
         fast_path[i].speed = 1800.0f;
         fast_path[i].end_speed = 1800.0f;  
       } else if ( motion_queue[i+1] == DIA_LEFT_TURN || motion_queue[i+1] == DIA_RIGHT_TURN ){
-        // V90の時は速度1700に落とす
-        fast_path[i].speed = 1800.0f;
+        // V90の時は速度1700
+        fast_path[i].speed = 1700.0f;
+        fast_path[i].end_speed = 1700.0f;
+      } else if ( motion_queue[i+1] == RETURN_DIA_LEFT_135 || motion_queue[i+1] == RETURN_DIA_RIGHT_135 ){
+        // 135度復帰の時は速度1700
+        fast_path[i].speed = 1700.0f;
         fast_path[i].end_speed = 1700.0f;
       } else {
         // 復帰の場合は速度を1800にする
@@ -1185,6 +1204,9 @@ void setFastPathParameterMax( int8_t motion_buff[256], int8_t motion_data[256], 
       if ( motion_queue[i+1] == DIA_LEFT_TURN || motion_queue[i+1] == DIA_RIGHT_TURN ){
         // V90の時は速度1700に落とす
         fast_path[i].end_speed = 1700.0f;
+      } else if ( motion_queue[i+1] == RETURN_DIA_LEFT_135 || motion_queue[i+1] == RETURN_DIA_RIGHT_135 ){
+        // 135度復帰の時は速度1700に落とす
+        fast_path[i].end_speed = 1700.0f;
       } else {
         // 復帰の場合は速度を1800にする
         fast_path[i].end_speed = 1800.0f;
@@ -1196,6 +1218,10 @@ void setFastPathParameterMax( int8_t motion_buff[256], int8_t motion_data[256], 
         fast_path[i].end_speed = 1800.0f;
       } else if ( motion_queue[i+1] == DIA_LEFT_TURN || motion_queue[i+1] == DIA_RIGHT_TURN ){
         // V90の時は速度一定
+        fast_path[i].speed = 1700.0f;
+        fast_path[i].end_speed = 1700.0f;
+      } else if ( motion_queue[i+1] == RETURN_DIA_LEFT_135 || motion_queue[i+1] == RETURN_DIA_RIGHT_135 ){
+        // 135度復帰の時は速度1700
         fast_path[i].speed = 1700.0f;
         fast_path[i].end_speed = 1700.0f;
       } else {
@@ -1217,6 +1243,10 @@ void setFastPathParameterMax( int8_t motion_buff[256], int8_t motion_data[256], 
         // 大廻180度なら
         fast_path[i].speed = 1900.0f;
         fast_path[i].end_speed = 1900.0f;
+      } else if ( motion_queue[i+1] == DIA_CENTER_LEFT_135 || motion_queue[i+1] == DIA_CENTER_RIGHT_135 ){
+        // 135度なら
+        fast_path[i].speed = 1800.0f;
+        fast_path[i].end_speed = 1700.0f;
       } else {
         fast_path[i].speed = 1800.0f;
         fast_path[i].end_speed = 1800.0f;
@@ -1234,6 +1264,10 @@ void setFastPathParameterMax( int8_t motion_buff[256], int8_t motion_data[256], 
         // 大廻180度なら
         fast_path[i].speed = 1900.0f;
         fast_path[i].end_speed = 1900.0f;
+      } else if ( motion_queue[i+1] == DIA_CENTER_LEFT_135 || motion_queue[i+1] == DIA_CENTER_RIGHT_135 ){
+        // 135度なら
+        fast_path[i].speed = 1700.0f;
+        fast_path[i].end_speed = 1700.0f;
       } else {
         fast_path[i].speed = 1800.0f;
         fast_path[i].end_speed = 1800.0f;
@@ -1246,12 +1280,12 @@ void setFastPathParameterMax( int8_t motion_buff[256], int8_t motion_data[256], 
   // 停止する前に前壁制御を有効にしたdelay
   if ( motion_queue[*cnt_motion-2] != SET_STRAIGHT ){
     // 終了速度を低速のまま
-    fast_path[*cnt_motion-2].end_speed = 300.0f;
+    fast_path[*cnt_motion-2].end_speed = 1000.0f;
     // 次の動作をEND_MOTIONから直線30mm 停止へ
     motion_buff[*cnt_motion-1] = front;
-    fast_path[*cnt_motion-1].distance = 10.0f;
-    fast_path[*cnt_motion-1].speed = 300.0f;
-    fast_path[*cnt_motion-1].start_speed = 300.0f;
+    fast_path[*cnt_motion-1].distance = 25.0f;
+    fast_path[*cnt_motion-1].speed = 1000.0f;
+    fast_path[*cnt_motion-1].start_speed = 1000.0f;
     fast_path[*cnt_motion-1].end_speed = 0.0f;
     // 壁制御を有効なストレートモードを作成すること
     motion_queue[*cnt_motion-1] = SET_FRONT_PD_STRAIGHT;
