@@ -7,7 +7,7 @@
 
 typedef struct {
   int16_t trans_ideal_vel[LOG_NUMBER];
-  int16_t trans_vel[LOG_NUMBER];
+  //int16_t trans_vel[LOG_NUMBER];
   //int16_t rotation_ideal[LOG_NUMBER];
   //int16_t rotation_vel[LOG_NUMBER];
   float trans_dis[LOG_NUMBER];

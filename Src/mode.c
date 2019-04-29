@@ -24,8 +24,8 @@
 #include "mazeRun.h"
 
 // ゴール座標の設定
-static uint8_t goal_x = 6;
-static uint8_t goal_y = 4;
+static uint8_t goal_x = 1;
+static uint8_t goal_y = 0;
 static uint8_t maze_goal_size = 1;
 
 void modeSelect( int8_t mode )
@@ -220,7 +220,7 @@ void mode2( void )
     if ( mode_distance > 30.0f ){
       speed_count++;
       mode_distance = 0.0f;
-      if ( speed_count > 5 ) speed_count = 0;
+      if ( speed_count > 7 ) speed_count = 0;
       buzzermodeSelect( speed_count );
       waitMotion( 300 );
     }
@@ -228,7 +228,7 @@ void mode2( void )
     if ( mode_distance < -30.0f ){
       speed_count--;
       mode_distance = 0.0f;
-      if ( speed_count < 0 ) speed_count = 5;
+      if ( speed_count < 0 ) speed_count = 7;
       buzzermodeSelect( speed_count );
       waitMotion( 300 );
     }
@@ -244,7 +244,7 @@ void mode2( void )
   
   setFrontWallP( 1.0f );
 
-  if ( speed_count == 0 ){
+   if ( speed_count == 0 ){
     speed_count = PARAM_1400;
     setNormalRunParam( &run_param, 18000.0f, 1000.0f );       // 加速度、速度指定
     setNormalRunParam( &rotation_param, 6300.0f, 450.0f );  // 角加速度、角速度指定  
@@ -283,7 +283,20 @@ void mode2( void )
     setPIDGain( &rotation_gain, 0.70f, 65.0f, 0.30f ); 
     setSenDiffValue( 80 ); 
     _straight = 1;
-  } 
+  } else if ( speed_count == 6 ){
+    speed_count = MAX_PARAM;
+    setNormalRunParam( &run_param, 22000.0f, 1000.0f );       // 加速度、速度指定
+    setNormalRunParam( &rotation_param, 6300.0f, 450.0f );  // 角加速度、角速度指定  
+    setPIDGain( &rotation_gain, 0.95f, 80.0f, 0.30f ); 
+    setSenDiffValue( 200 ); 
+  } else if ( speed_count == 7 ){
+    speed_count = MAX_PARAM;
+    setNormalRunParam( &run_param, 22000.0f, 1000.0f );       // 加速度、速度指定
+    setNormalRunParam( &rotation_param, 6300.0f, 450.0f );  // 角加速度、角速度指定 
+    setPIDGain( &rotation_gain, 0.95f, 80.0f, 0.30f ); 
+    setSenDiffValue( 200 ); 
+    _straight = 1;
+  }
   
   
   if ( agentDijkstraRoute( goal_x, goal_y, &wall_data, MAZE_CLASSIC_SIZE, _straight, speed_count, 0 ) == 0 ){
@@ -296,8 +309,10 @@ void mode2( void )
     adachiFastRunDiagonal1400( &run_param, &rotation_param );
   } else if ( speed_count == PARAM_1600 ){
     adachiFastRunDiagonal1600( &run_param, &rotation_param );
-  }  else if ( speed_count == PARAM_1700 ){
+  } else if ( speed_count == PARAM_1700 ){
     adachiFastRunDiagonal1700( &run_param, &rotation_param );
+  } else if ( speed_count == MAX_PARAM ){
+    adachiFastRunDiagonalMax( &run_param, &rotation_param );
   }
 
   // debug 
@@ -308,6 +323,7 @@ void mode2( void )
   fullColorLedOut( 0x00 );
   while( getPushsw() == 0 );
   showLog();  
+
 
 }
 

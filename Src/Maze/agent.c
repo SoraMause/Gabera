@@ -647,6 +647,8 @@ int8_t agentDijkstraRoute( int16_t gx, int16_t gy, t_walldata *wall, uint8_t maz
     setFastPathParameter1600( motion_buff, motion_data, &cnt_motion, out_flag );
   } else if ( speed_mode == PARAM_1700 ){
     setFastPathParameter1700( motion_buff, motion_data, &cnt_motion, out_flag );
+  } else if ( speed_mode == MAX_PARAM ){
+    setFastPathParameterMax( motion_buff, motion_data, &cnt_motion, out_flag );
   }
   
   
@@ -1008,6 +1010,248 @@ void setFastPathParameter1700( int8_t motion_buff[256], int8_t motion_data[256],
     fast_path[*cnt_motion-1].distance = 10.0f;
     fast_path[*cnt_motion-1].speed = 100.0f;
     fast_path[*cnt_motion-1].start_speed = 1700.0f;
+    fast_path[*cnt_motion-1].end_speed = 0.0f;
+    // 壁制御を有効なストレートモードを作成すること
+    motion_queue[*cnt_motion-1] = SET_FRONT_PD_STRAIGHT;
+    // delay
+    motion_buff[*cnt_motion] = end_maze;
+    motion_queue[*cnt_motion] = FRONTPD_DELAY;
+    (*cnt_motion)++;
+    // cnt_motionにEND_MOTIONを入れてその後
+    motion_buff[*cnt_motion] = end_maze;
+    motion_queue[*cnt_motion] = END_MOTION;
+    (*cnt_motion)++;
+  } else {
+    // 終了速度を低速のまま
+    fast_path[*cnt_motion-2].end_speed = 300.0f;
+    fast_path[*cnt_motion-2].distance -= 45.0f;
+    // 次の動作をEND_MOTIONから直線30mm 停止へ
+    motion_buff[*cnt_motion-1] = front;
+    fast_path[*cnt_motion-1].distance = 45.0f;
+    fast_path[*cnt_motion-1].speed = 300.0f;
+    fast_path[*cnt_motion-1].start_speed = 300.0f;
+    fast_path[*cnt_motion-1].end_speed = 0.0f;
+    // 壁制御を有効なストレートモードを作成すること
+    motion_queue[*cnt_motion-1] = SET_FRONT_PD_STRAIGHT;
+    // delay
+    motion_buff[*cnt_motion] = end_maze;
+    motion_queue[*cnt_motion] = DELAY;
+    (*cnt_motion)++;
+    // cnt_motionにEND_MOTIONを入れてその後
+    motion_buff[*cnt_motion] = end_maze;
+    motion_queue[*cnt_motion] = END_MOTION;
+    (*cnt_motion)++;
+  }
+  
+}
+
+void setFastPathParameterMax( int8_t motion_buff[256], int8_t motion_data[256], uint8_t *cnt_motion, int8_t out_flag )
+{
+  
+  fast_path_init();
+  motion_buff[0] = front;
+  fast_path[0].start_speed = 0.0f;
+  fast_path[0].end_speed = 1300.0f;
+  fast_path[0].speed = 1300.0f;
+  fast_path[0].distance = 47.0f;
+  for( int i = 1; i < *cnt_motion; i++ ){
+    // 次の動作によって速度を変える 
+    fast_path[i].start_speed = fast_path[i-1].end_speed;
+
+    if ( motion_queue[i] == SET_STRAIGHT ){
+      fast_path[i].distance = motion_data[i] * ONE_BLOCK_DISTANCE;
+      // to do 距離によって変更
+      if ( fast_path[i].distance > 6.0f * ONE_BLOCK_DISTANCE ) {
+         fast_path[i].speed = 5000.0f; 
+      } else if ( fast_path[i].distance > 5.0f * ONE_BLOCK_DISTANCE ) {
+        fast_path[i].speed = 4500.0f; 
+      } else if ( fast_path[i].distance > 4.0f * ONE_BLOCK_DISTANCE ) {
+        fast_path[i].speed = 4000.0f; 
+      } else if ( fast_path[i].distance > 3.0f * ONE_BLOCK_DISTANCE ) {
+        fast_path[i].speed = 3500.0f;
+      } else if ( fast_path[i].distance > 2.0f * ONE_BLOCK_DISTANCE ){
+        if ( motion_queue[i+1] == CENRTER_SLAROM_LEFT || motion_queue[i+1] == CENRTER_SLAROM_RIGHT ){
+          // 大廻90度なら
+          fast_path[i].speed = 3000.0f;
+        } else if ( motion_queue[i+1] == SLAROM_LEFT_180 || motion_queue[i+1] == SLAROM_RIGHT_180 ){
+          // 大廻180度なら
+          fast_path[i].speed = 2900.0f;
+        } else {
+          fast_path[i].speed = 2800.0f;
+        }
+      } else if ( fast_path[i].distance > 1.0f * ONE_BLOCK_DISTANCE ){
+        if ( motion_queue[i+1] == CENRTER_SLAROM_LEFT || motion_queue[i+1] == CENRTER_SLAROM_RIGHT ){
+          // 大廻90度なら
+          fast_path[i].speed = 2500.0f;
+        } else if ( motion_queue[i+1] == SLAROM_LEFT_180 || motion_queue[i+1] == SLAROM_RIGHT_180 ){
+          // 大廻180度なら
+          fast_path[i].speed = 2400.0f;
+        } else {
+          fast_path[i].speed = 2300.0f;
+        }
+      } else {
+        fast_path[i].speed = 2000.0f;
+      }
+
+      if (motion_queue[i+1] == CENRTER_SLAROM_LEFT || motion_queue[i+1] == CENRTER_SLAROM_RIGHT){
+        // 大廻90度なら
+        fast_path[i].end_speed = 2000.0f;
+      } else if ( motion_queue[i+1] == SLAROM_LEFT_180 || motion_queue[i+1] == SLAROM_RIGHT_180 ){
+        // 大廻180度なら
+        fast_path[i].end_speed = 1900.0f;
+      } else {
+        fast_path[i].end_speed = 1800.0f;
+      }
+
+    } else if ( motion_queue[i] == CENRTER_SLAROM_LEFT || motion_queue[i] == CENRTER_SLAROM_RIGHT ){
+      // 後距離の速度指定
+      if ( motion_queue[i+1] == SET_STRAIGHT ){
+        fast_path[i].speed = 2000.0f;
+        fast_path[i].end_speed = 2000.0f;    
+      } else if (motion_queue[i+1] == CENRTER_SLAROM_LEFT || motion_queue[i+1] == CENRTER_SLAROM_RIGHT){
+        // 大廻90度なら
+        fast_path[i].speed = 2000.0f;
+        fast_path[i].end_speed = 2000.0f;
+      } else if ( motion_queue[i+1] == SLAROM_LEFT_180 || motion_queue[i+1] == SLAROM_RIGHT_180 ){
+        // 大廻180度なら
+        fast_path[i].speed = 2000.0f;
+        fast_path[i].end_speed = 1900.0f;
+      } else {
+        fast_path[i].speed = 2000.0f;
+        fast_path[i].end_speed = 1800.0f;
+      }
+    } else if ( motion_queue[i] == SLAROM_LEFT_180 || motion_queue[i] == SLAROM_RIGHT_180 ){
+      // 後距離の速度指定
+      if ( motion_queue[i+1] == SET_STRAIGHT ){
+        fast_path[i].speed = 2000.0f;
+        fast_path[i].end_speed = 2000.0f;    
+      } else if (motion_queue[i+1] == CENRTER_SLAROM_LEFT || motion_queue[i+1] == CENRTER_SLAROM_RIGHT){
+        // 大廻90度なら
+        fast_path[i].speed = 2000.0f;
+        fast_path[i].end_speed = 2000.0f;
+      } else if ( motion_queue[i+1] == SLAROM_LEFT_180 || motion_queue[i+1] == SLAROM_RIGHT_180 ){
+        // 大廻180度なら
+        fast_path[i].speed = 1900.0f;
+        fast_path[i].end_speed = 1900.0f;
+      } else {
+        fast_path[i].speed = 1900.0f;
+        fast_path[i].end_speed = 1800.0f;
+      }
+    } else if ( motion_queue[i] == DIA_CENTER_LEFT || motion_queue[i] == DIA_CENTER_RIGHT ){
+      // 後距離の速度指定
+      if ( motion_queue[i+1] == SET_DIA_STRAIGHT ){
+        fast_path[i].speed = 1800.0f;
+        fast_path[i].end_speed = 1800.0f;  
+      } else if ( motion_queue[i+1] == DIA_LEFT_TURN || motion_queue[i+1] == DIA_RIGHT_TURN ){
+        // V90の時は速度1700に落とす
+        fast_path[i].speed = 1800.0f;
+        fast_path[i].end_speed = 1700.0f;
+      } else {
+        // 復帰の場合は速度を1800にする
+        fast_path[i].speed = 1800.0f;
+        fast_path[i].end_speed = 1800.0f;
+      }
+    } else if ( motion_queue[i] == DIA_CENTER_LEFT_135 || motion_queue[i] == DIA_CENTER_RIGHT_135 ){
+      // 後距離の速度指定
+      if ( motion_queue[i+1] == SET_DIA_STRAIGHT ){
+        fast_path[i].speed = 1800.0f;
+        fast_path[i].end_speed = 1800.0f;  
+      } else if ( motion_queue[i+1] == DIA_LEFT_TURN || motion_queue[i+1] == DIA_RIGHT_TURN ){
+        // V90の時は速度1700に落とす
+        fast_path[i].speed = 1800.0f;
+        fast_path[i].end_speed = 1700.0f;
+      } else {
+        // 復帰の場合は速度を1800にする
+        fast_path[i].speed = 1800.0f;
+        fast_path[i].end_speed = 1800.0f;
+      }
+    } else if ( motion_queue[i] == SET_DIA_STRAIGHT ){
+      fast_path[i].distance = motion_data[i] * SLATING_ONE_BLOCK_DISTANCE;
+
+      if ( fast_path[i].distance > 12.0f * SLATING_ONE_BLOCK_DISTANCE ){
+        fast_path[i].speed = 4000.0f;
+      } else if ( fast_path[i].distance > 9.0f * SLATING_ONE_BLOCK_DISTANCE ){
+        fast_path[i].speed = 3600.0f;
+      } else if ( fast_path[i].distance > 6.0f * SLATING_ONE_BLOCK_DISTANCE ){
+        fast_path[i].speed = 3200.0f;
+      } else if ( fast_path[i].distance > 4.0f * SLATING_ONE_BLOCK_DISTANCE ){
+        fast_path[i].speed = 2800.0f;
+      } else if ( fast_path[i].distance > 2.0f * SLATING_ONE_BLOCK_DISTANCE ){
+        fast_path[i].speed = 2300.0f;
+      } else {
+        fast_path[i].speed = 1800.0f;
+      }
+
+      if ( motion_queue[i+1] == DIA_LEFT_TURN || motion_queue[i+1] == DIA_RIGHT_TURN ){
+        // V90の時は速度1700に落とす
+        fast_path[i].end_speed = 1700.0f;
+      } else {
+        // 復帰の場合は速度を1800にする
+        fast_path[i].end_speed = 1800.0f;
+      }
+    } else if ( motion_queue[i] == DIA_LEFT_TURN || motion_queue[i] == DIA_RIGHT_TURN ){
+      // 後距離の速度指定
+      if ( motion_queue[i+1] == SET_DIA_STRAIGHT ){
+        fast_path[i].speed = 1800.0f;
+        fast_path[i].end_speed = 1800.0f;
+      } else if ( motion_queue[i+1] == DIA_LEFT_TURN || motion_queue[i+1] == DIA_RIGHT_TURN ){
+        // V90の時は速度一定
+        fast_path[i].speed = 1700.0f;
+        fast_path[i].end_speed = 1700.0f;
+      } else {
+        // 復帰の場合は速度を1800にする
+        fast_path[i].speed = 1800.0f;
+        fast_path[i].end_speed = 1800.0f;
+      }
+    } else if ( motion_queue[i] == RETURN_DIA_LEFT || motion_queue[i] == RETURN_DIA_RIGHT ){
+      // 後距離の速度指定
+      if ( motion_queue[i+1] == SET_STRAIGHT ){
+        fast_path[i].speed = 2000.0f;
+        fast_path[i].end_speed = 2000.0f;
+        
+      } else if (motion_queue[i+1] == CENRTER_SLAROM_LEFT || motion_queue[i+1] == CENRTER_SLAROM_RIGHT){
+        // 大廻90度なら
+        fast_path[i].speed = 2000.0f;
+        fast_path[i].end_speed = 2000.0f;
+      } else if ( motion_queue[i+1] == SLAROM_LEFT_180 || motion_queue[i+1] == SLAROM_RIGHT_180 ){
+        // 大廻180度なら
+        fast_path[i].speed = 1900.0f;
+        fast_path[i].end_speed = 1900.0f;
+      } else {
+        fast_path[i].speed = 1800.0f;
+        fast_path[i].end_speed = 1800.0f;
+      }
+    } else if ( motion_queue[i] == RETURN_DIA_LEFT_135 || motion_queue[i] == RETURN_DIA_RIGHT_135 ){
+      // 後距離の速度指定
+      if ( motion_queue[i+1] == SET_STRAIGHT ){
+        fast_path[i].speed = 2000.0f;
+        fast_path[i].end_speed = 2000.0f;
+      } else if (motion_queue[i+1] == CENRTER_SLAROM_LEFT || motion_queue[i+1] == CENRTER_SLAROM_RIGHT){
+        // 大廻90度なら
+        fast_path[i].speed = 2000.0f;
+        fast_path[i].end_speed = 2000.0f;
+      } else if ( motion_queue[i+1] == SLAROM_LEFT_180 || motion_queue[i+1] == SLAROM_RIGHT_180 ){
+        // 大廻180度なら
+        fast_path[i].speed = 1900.0f;
+        fast_path[i].end_speed = 1900.0f;
+      } else {
+        fast_path[i].speed = 1800.0f;
+        fast_path[i].end_speed = 1800.0f;
+      }
+    }
+  }
+
+  // もし、END_MOTIONの前がスラロームターンの場合
+  // 前壁制御を有効にして20mm進めようとする 必須条件　加速度 16 m /ss
+  // 停止する前に前壁制御を有効にしたdelay
+  if ( motion_queue[*cnt_motion-2] != SET_STRAIGHT ){
+    // 終了速度を低速のまま
+    fast_path[*cnt_motion-2].end_speed = 300.0f;
+    // 次の動作をEND_MOTIONから直線30mm 停止へ
+    motion_buff[*cnt_motion-1] = front;
+    fast_path[*cnt_motion-1].distance = 10.0f;
+    fast_path[*cnt_motion-1].speed = 300.0f;
+    fast_path[*cnt_motion-1].start_speed = 300.0f;
     fast_path[*cnt_motion-1].end_speed = 0.0f;
     // 壁制御を有効なストレートモードを作成すること
     motion_queue[*cnt_motion-1] = SET_FRONT_PD_STRAIGHT;
