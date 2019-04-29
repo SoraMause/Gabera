@@ -815,7 +815,7 @@ void setFastPathParameter1400( int8_t motion_buff[256], int8_t motion_data[256],
     fast_path[*cnt_motion-2].distance -= 45.0f;
     // 次の動作をEND_MOTIONから直線30mm 停止へ
     motion_buff[*cnt_motion-1] = front;
-    fast_path[*cnt_motion-1].distance = 45.0f;
+    fast_path[*cnt_motion-1].distance = 50.0f;
     fast_path[*cnt_motion-1].speed = 300.0f;
     fast_path[*cnt_motion-1].start_speed = 300.0f;
     fast_path[*cnt_motion-1].end_speed = 0.0f;
@@ -921,7 +921,7 @@ void setFastPathParameter1600( int8_t motion_buff[256], int8_t motion_data[256],
     fast_path[*cnt_motion-2].distance -= 45.0f;
     // 次の動作をEND_MOTIONから直線30mm 停止へ
     motion_buff[*cnt_motion-1] = front;
-    fast_path[*cnt_motion-1].distance = 45.0f;
+    fast_path[*cnt_motion-1].distance = 50.0f;
     fast_path[*cnt_motion-1].speed = 300.0f;
     fast_path[*cnt_motion-1].start_speed = 300.0f;
     fast_path[*cnt_motion-1].end_speed = 0.0f;
@@ -1027,7 +1027,7 @@ void setFastPathParameter1700( int8_t motion_buff[256], int8_t motion_data[256],
     fast_path[*cnt_motion-2].distance -= 45.0f;
     // 次の動作をEND_MOTIONから直線30mm 停止へ
     motion_buff[*cnt_motion-1] = front;
-    fast_path[*cnt_motion-1].distance = 45.0f;
+    fast_path[*cnt_motion-1].distance = 50.0f;
     fast_path[*cnt_motion-1].speed = 300.0f;
     fast_path[*cnt_motion-1].start_speed = 300.0f;
     fast_path[*cnt_motion-1].end_speed = 0.0f;
@@ -1303,7 +1303,7 @@ void setFastPathParameterMax( int8_t motion_buff[256], int8_t motion_data[256], 
     fast_path[*cnt_motion-2].distance -= 45.0f;
     // 次の動作をEND_MOTIONから直線30mm 停止へ
     motion_buff[*cnt_motion-1] = front;
-    fast_path[*cnt_motion-1].distance = 45.0f;
+    fast_path[*cnt_motion-1].distance = 50.0f;
     fast_path[*cnt_motion-1].speed = 300.0f;
     fast_path[*cnt_motion-1].start_speed = 300.0f;
     fast_path[*cnt_motion-1].end_speed = 0.0f;
