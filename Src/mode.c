@@ -24,8 +24,8 @@
 #include "mazeRun.h"
 
 // ゴール座標の設定
-static uint8_t goal_x = 1;
-static uint8_t goal_y = 0;
+static uint8_t goal_x = 6;
+static uint8_t goal_y = 4;
 static uint8_t maze_goal_size = 1;
 
 void modeSelect( int8_t mode )
@@ -100,7 +100,7 @@ void mode_init( void )
   setSlaromOffset( &slarom500, 18.5f, 19.5f, 18.5f, 19.5f, 7200.0f, 600.0f );
 
   setPIDGain( &translation_gain, 1.0f, 30.0f, 0.0f );  
-  setPIDGain( &rotation_gain, 0.35f, 20.0f, 0.25f ); 
+  setPIDGain( &rotation_gain, 0.39f, 15.0f, 0.50f ); 
   setPIDGain( &sensor_gain, 0.2f, 0.0f, 0.0f );
   setFrontWallP( 0.5f );
 
@@ -220,8 +220,7 @@ void mode2( void )
     if ( mode_distance > 30.0f ){
       speed_count++;
       mode_distance = 0.0f;
-      if ( speed_count > 7 ) speed_count = 0;
-      if ( batt_monitor < 7.6f && speed_count >5 ) speed_count = 5; 
+      if ( speed_count > 5 ) speed_count = 0;
       buzzermodeSelect( speed_count );
       waitMotion( 300 );
     }
@@ -229,8 +228,7 @@ void mode2( void )
     if ( mode_distance < -30.0f ){
       speed_count--;
       mode_distance = 0.0f;
-      if ( speed_count < 0 ) speed_count = 7;
-      if ( batt_monitor < 7.6f && speed_count >5 ) speed_count = 5; 
+      if ( speed_count < 0 ) speed_count = 5;
       buzzermodeSelect( speed_count );
       waitMotion( 300 );
     }
@@ -285,20 +283,7 @@ void mode2( void )
     setPIDGain( &rotation_gain, 0.70f, 65.0f, 0.30f ); 
     setSenDiffValue( 80 ); 
     _straight = 1;
-  } else if ( speed_count == 6 ){
-    speed_count = MAX_PARAM;
-    setNormalRunParam( &run_param, 22000.0f, 1000.0f );       // 加速度、速度指定
-    setNormalRunParam( &rotation_param, 6300.0f, 450.0f );  // 角加速度、角速度指定  
-    setPIDGain( &rotation_gain, 0.95f, 80.0f, 0.30f ); 
-    setSenDiffValue( 200 ); 
-  } else if ( speed_count == 7 ){
-    speed_count = MAX_PARAM;
-    setNormalRunParam( &run_param, 22000.0f, 1000.0f );       // 加速度、速度指定
-    setNormalRunParam( &rotation_param, 6300.0f, 450.0f );  // 角加速度、角速度指定 
-    setPIDGain( &rotation_gain, 0.95f, 80.0f, 0.30f ); 
-    setSenDiffValue( 200 ); 
-    _straight = 1;
-  }
+  } 
   
   
   if ( agentDijkstraRoute( goal_x, goal_y, &wall_data, MAZE_CLASSIC_SIZE, _straight, speed_count, 0 ) == 0 ){
@@ -311,10 +296,8 @@ void mode2( void )
     adachiFastRunDiagonal1400( &run_param, &rotation_param );
   } else if ( speed_count == PARAM_1600 ){
     adachiFastRunDiagonal1600( &run_param, &rotation_param );
-  } else if ( speed_count == PARAM_1700 ){
+  }  else if ( speed_count == PARAM_1700 ){
     adachiFastRunDiagonal1700( &run_param, &rotation_param );
-  } else if ( speed_count == MAX_PARAM ){
-    adachiFastRunDiagonalMax( &run_param, &rotation_param );
   }
 
   // debug 
@@ -342,7 +325,7 @@ void mode3( void )
   adcEnd();
   if ( wall_data.save == 1 ){
     //agentSetShortRoute( goal_x, goal_y, &wall_data, MAZE_CLASSIC_SIZE, 1, 0 );
-    agentDijkstraRoute( goal_x, goal_y, &wall_data, MAZE_CLASSIC_SIZE, 0, MAX_PARAM, 1 );
+    agentDijkstraRoute( goal_x, goal_y, &wall_data, MAZE_CLASSIC_SIZE, 0, PARAM_1400, 1 );
   }
   
 }
@@ -386,8 +369,8 @@ void mode4( void )
 void mode5( void )
 {
   setPIDGain( &translation_gain, 2.6f, 45.0f, 0.0f );  
-  setPIDGain( &rotation_gain, 0.80f, 65.0f, 0.30f ); 
-  setSenDiffValue( 150 );
+  setPIDGain( &rotation_gain, 0.70f, 65.0f, 0.30f ); 
+  setSenDiffValue( 80 );
   startAction();
 
   setControlFlag( 0 );
@@ -404,17 +387,31 @@ void mode5( void )
   setControlFlag( 1 );
 
   sidewall_control_flag = 1;
-  setStraight( 227.0f, 20000.0f, 2000.0f, 0.0f, 2000.0f );
+  setStraight( 227.0f, 20000.0f, 1700.0f, 0.0f, 1700.0f );
   waitStraight();
   sidewall_control_flag = 1;
-  setStraight( 18.0f, 0.0f, 2000.0f, 2000.0f, 2000.0f );
+  setStraight( 21.0f, 0.0f, 1700.0f, 1700.0f, 1800.0f );
   waitStraight();
-  setRotation( 90.0f, 25000.0f, 1100.0f, 2000.0f);
+  setRotation( 135.0f, 26000.0f, 1200.0f, 1700.0f);
   waitRotation();
-  setStraight( 47.0f, 0.0f, 2000.0f, 2000.0f, 2000.0f);
+  setStraight( 29.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f);
   waitStraight();
 
-  setStraight( 180.0f, 20000.0f, 2000.0f, 2000.0f, 0.0f );
+  setStraight(11.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f);
+  waitStraight();
+  setRotation(-90.0f, 40000.0f, 1200.0f, 1700.0f);
+  waitRotation();
+  setStraight(24.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f);
+  waitStraight();
+
+  setStraight(11.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f);
+  waitStraight();
+  setRotation(135.0f, 30000.0f, 1200.0f, 1700.0f);
+  waitRotation();
+  setStraight(40.0f, 0.0f, 1700.0f, 1700.0f, 1700.0f);
+  waitStraight();
+
+  setStraight( 180.0f, 20000.0f, 1700.0f, 1700.0f, 0.0f );
   waitStraight();
   
   waitMotion( 100 );

@@ -36,10 +36,10 @@ void setLog( void )
       logger.sensor_left[log_count] = sen_l.now;
       logger.sensor_right[log_count] = sen_r.now;
       //logger.sensor_front[log_count] = sen_front.now;
-      logger.trans_ideal_vel[log_count] = (int16_t)translation_ideal.velocity;
-      logger.trans_vel[log_count] = (int16_t)right_real.velocity;
-      //logger.trans_ideal_vel[log_count] = (int16_t)rotation_ideal.velocity;
-      //logger.trans_vel[log_count] = (int16_t)rotation_real.velocity;
+      //logger.trans_ideal_vel[log_count] = (int16_t)translation_ideal.velocity;
+      //logger.trans_vel[log_count] = (int16_t)right_real.velocity;
+      logger.trans_ideal_vel[log_count] = (int16_t)rotation_ideal.velocity;
+      logger.trans_vel[log_count] = (int16_t)rotation_real.velocity;
       //logger.rotation_ideal[log_count] = (int16_t)rotation_ideal.velocity;
       //logger.rotation_vel[log_count] = (int16_t)rotation_real.velocity;
       //logger.batt_data[log_count] = (int8_t)(batt_monitor * 10.0f);
