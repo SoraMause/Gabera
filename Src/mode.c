@@ -24,8 +24,8 @@
 #include "mazeRun.h"
 
 // ゴール座標の設定
-static uint8_t goal_x = 1;
-static uint8_t goal_y = 0;
+static uint8_t goal_x = 7;
+static uint8_t goal_y = 7;
 static uint8_t maze_goal_size = 1;
 
 void modeSelect( int8_t mode )
@@ -97,10 +97,10 @@ void mode_init( void )
 	rotation_trape_param.back_rightturn_flag = 0;
 	rotation_deviation.cumulative = 0.0;
   // to do search param と fast paramで分けれるようにする
-  setSlaromOffset( &slarom500, 18.5f, 19.5f, 18.5f, 19.5f, 7200.0f, 600.0f );
+  setSlaromOffset( &slarom500, 19.5f, 21.0f, 19.5f, 21.0f, 7200.0f, 600.0f );
 
   setPIDGain( &translation_gain, 1.0f, 30.0f, 0.0f );  
-  setPIDGain( &rotation_gain, 0.39f, 15.0f, 0.50f ); 
+  setPIDGain( &rotation_gain, 0.35f, 25.0f, 0.35f ); 
   setPIDGain( &sensor_gain, 0.2f, 0.0f, 0.0f );
   setFrontWallP( 0.5f );
 
@@ -407,37 +407,40 @@ void mode5( void )
   setControlFlag( 0 );
   writeFlashData( &wall_bit );
   
-  waitMotion( 1000 );
-  fullColorLedOut( 0x07 );
+  if ( mypos.x == 0 && mypos.y == 0 && mypos.direction == North ){
+    waitMotion( 1000 );
+    fullColorLedOut( 0x07 );
 
-  loadWallData( &wall_data );
-  positionReset( &mypos );
+    loadWallData( &wall_data );
+    positionReset( &mypos );
 
-  setPIDGain( &translation_gain, 2.6f, 45.0f, 0.0f );  
-  setFrontWallP( 1.0f );
-  setNormalRunParam( &run_param, 20000.0f, 1000.0f );       // 加速度、速度指定
-  setNormalRunParam( &rotation_param, 6300.0f, 450.0f );  // 角加速度、角速度指定  
-  setPIDGain( &rotation_gain, 0.60f, 60.0f, 0.25f );
-  setSenDiffValue( 45 ); 
+    setPIDGain( &translation_gain, 2.6f, 45.0f, 0.0f );  
+    setFrontWallP( 1.0f );
+    setNormalRunParam( &run_param, 20000.0f, 1000.0f );       // 加速度、速度指定
+    setNormalRunParam( &rotation_param, 6300.0f, 450.0f );  // 角加速度、角速度指定  
+    setPIDGain( &rotation_gain, 0.60f, 60.0f, 0.25f );
+    setSenDiffValue( 45 ); 
 
-  waitMotion( 1000 );
+    waitMotion( 1000 );
 
-  fullColorLedOut( 0x01 );
+    fullColorLedOut( 0x01 );
 
-  if ( agentDijkstraRoute( goal_x, goal_y, &wall_data, MAZE_CLASSIC_SIZE, 1, PARAM_1600, 0 ) == 0 ){
-    return;
+    if ( agentDijkstraRoute( goal_x, goal_y, &wall_data, MAZE_CLASSIC_SIZE, 1, PARAM_1600, 0 ) == 0 ){
+      return;
+    }
+
+    waitMotion( 500 );
+    MPU6500_z_axis_offset_calc_start();
+    while( MPU6500_calc_check() ==  0 );
+    fullColorLedOut( LED_OFF );
+    adcStart();
+    waitMotion( 100 );
+    setLogFlag( 1 );
+    setControlFlag( 1 );
+
+    adachiFastRunDiagonal1600( &run_param, &rotation_param );
   }
 
-  waitMotion( 500 );
-  MPU6500_z_axis_offset_calc_start();
-  while( MPU6500_calc_check() ==  0 );
-  fullColorLedOut( LED_OFF );
-  adcStart();
-  waitMotion( 100 );
-  setLogFlag( 1 );
-  setControlFlag( 1 );
-
-  adachiFastRunDiagonal1600( &run_param, &rotation_param );
 
 
 }
