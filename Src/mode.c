@@ -97,7 +97,7 @@ void mode_init( void )
 	rotation_trape_param.back_rightturn_flag = 0;
 	rotation_deviation.cumulative = 0.0;
   // to do search param と fast paramで分けれるようにする
-  setSlaromOffset( &slarom500, 19.5f, 21.0f, 19.5f, 21.0f, 7200.0f, 600.0f );
+  setSlaromOffset( &slarom500, 19.0f, 20.5f, 19.0f, 20.5f, 7200.0f, 600.0f );
 
   setPIDGain( &translation_gain, 1.0f, 30.0f, 0.0f );  
   setPIDGain( &rotation_gain, 0.35f, 25.0f, 0.35f ); 
